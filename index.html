@@ -462,6 +462,24 @@
       letter-spacing: 0.08em;
     }
 
+    .footer__social {
+      display: flex;
+      gap: 0.875rem;
+    }
+    .footer__social a {
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--c-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer__social a:hover { border-color: var(--c-dust); color: var(--c-lunar); }
+
     /* ── OVERLAYS ──────────────────────────────────── */
     .overlay {
       position: fixed;
@@ -846,6 +864,14 @@
       <li><a href="#philosophy">About</a></li>
       <li><a href="#" onclick="openBooking(); return false;">Book Now</a></li>
     </ul>
+    <div class="footer__social">
+      <a href="https://instagram.com/hoeloye" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://x.com/_balogun_" target="_blank" rel="noopener" aria-label="X (Twitter)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
     <span class="footer__copy">© 2026 Astro Body Shop</span>
   </footer>
 
@@ -1105,19 +1131,44 @@
     });
 
     // ── Booking form submit ──────────────────────────
-    function submitBooking(e) {
+    async function submitBooking(e) {
       e.preventDefault();
-      document.getElementById('booking-form-wrap').style.display = 'none';
-      const success = document.getElementById('booking-success');
-      success.style.display = 'block';
-      setTimeout(() => {
-        closeBooking();
-        setTimeout(() => {
-          document.getElementById('booking-form-wrap').style.display = 'block';
-          success.style.display = 'none';
-          document.getElementById('booking-form').reset();
-        }, 350);
-      }, 3200);
+      const form = document.getElementById('booking-form');
+      const btn  = form.querySelector('[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('https://formspree.io/f/REPLACE_WITH_FORM_ID', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          document.getElementById('booking-form-wrap').style.display = 'none';
+          const success = document.getElementById('booking-success');
+          success.style.display = 'block';
+          setTimeout(() => {
+            closeBooking();
+            setTimeout(() => {
+              document.getElementById('booking-form-wrap').style.display = 'block';
+              success.style.display = 'none';
+              form.reset();
+              btn.disabled = false;
+              btn.textContent = 'Send Message';
+            }, 350);
+          }, 3200);
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          alert('Something went wrong — please try again or email directly.');
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+        alert('Could not send — check your connection and try again.');
+      }
     }
   </script>
 </body>

@@ -941,8 +941,12 @@ function setEbookCurrency(code, btn) {
   });
 }
 
+const _ebookLinks = {
+  'Muscle Building Routine': 'https://drive.google.com/file/d/1Qm8CxIlRHGw3xILFuLK-rzPGYtOhZAEi/view?usp=drive_link',
+};
 function buyEbook(name) {
-  window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
+  const url = _ebookLinks[name] || 'https://wa.me/message/BFJYP7KFU3A4O1';
+  window.open(url, '_blank');
 }
 
 /* Update cursor for new interactive elements */

@@ -570,6 +570,19 @@ footer{
 .service-item-btn:hover .service-name{color:var(--cream)}
 .service-item-btn:hover .service-desc{color:rgba(240,237,232,.45)}
 /* success */
+.form-check{display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;padding:.2rem 0;}
+.form-check input[type="checkbox"]{
+  appearance:none;-webkit-appearance:none;
+  width:1rem;height:1rem;flex-shrink:0;margin-top:.15rem;
+  border:1px solid rgba(200,184,154,.3);background:transparent;cursor:pointer;
+  transition:border-color .25s,background .25s;
+}
+.form-check input[type="checkbox"]:checked{
+  background:#C9A84C;border-color:#C9A84C;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23060f0a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:10px;
+}
+.form-check-label{font-size:.62rem;letter-spacing:.08em;color:rgba(240,237,232,.4);line-height:1.7;cursor:pointer;}
 .overlay-success{display:none;text-align:center;padding:3rem 0}
 .success-ring{width:4rem;height:4rem;border:1px solid rgba(200,184,154,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--cream);animation:successIn .5s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes successIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
@@ -1089,16 +1102,15 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <button class="overlay-close" onclick="closeOverlay('mobility')">✕</button>
     <p class="overlay-eyebrow">Service 04</p>
     <h3 class="overlay-title">Mobility Work</h3>
-    <p class="overlay-sub">A 20-minute virtual 1-on-1 session with Ayo, booked in advance. Structured around joint health, flexibility, and movement quality — tailored to exactly where you are right now.</p>
-    <p class="overlay-includes">What's included</p>
+    <p class="overlay-sub">A single 20-minute virtual session with Ayo. Each booking is one session — pay per session, book as many as you need. Must be reserved at least 48 hours in advance.</p>
+    <p class="overlay-includes">What happens in your session</p>
     <ul class="overlay-list">
       <li>20-minute virtual 1-on-1 with Ayo</li>
-      <li>Must be booked at least 48 hrs ahead</li>
-      <li>Personalised mobility assessment</li>
-      <li>Movement protocol tailored to you</li>
-      <li>Recovery &amp; deload guidance</li>
-      <li>Joint longevity programming</li>
-      <li>Video walkthroughs for each session</li>
+      <li>Focused on your current mobility priorities</li>
+      <li>Movement assessment &amp; real-time corrections</li>
+      <li>Actionable takeaways you can apply immediately</li>
+      <li>Session notes sent to you after the call</li>
+      <li>Book again whenever you need it</li>
     </ul>
     <div class="currency-tabs" id="mob-currency-tabs">
       <button class="currency-tab active" onclick="setMobilityCurrency('NGN',this)">&#8358; NGN</button>
@@ -1150,6 +1162,12 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
         <div class="form-group">
           <label class="form-label" for="f-notes">Anything else?</label>
           <textarea class="form-textarea" id="f-notes" name="notes" placeholder="Where you're at, what you've tried before..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" name="newsletter" value="yes">
+            <span class="form-check-label">Keep me in the loop — tips, new programs, and offers from Ayo</span>
+          </label>
         </div>
         <button type="submit" class="form-submit" id="form-submit-btn">Send Message</button>
       </form>

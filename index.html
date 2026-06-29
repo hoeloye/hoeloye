@@ -520,6 +520,13 @@ footer{
   .nav-link-ul{font-size:.54rem;letter-spacing:.16em;}
   .nav-cta{font-size:.54rem;padding:.5rem 1.1rem;letter-spacing:.14em;}
   .services-heading{font-size:1.4rem;margin-bottom:2.5rem;}
+  .section-label{margin-bottom:2.5rem;}
+  .about-grid{gap:2.5rem;}
+}
+/* phones only — hide nav CTA, accessible via hero & CTA section */
+@media(max-width:640px){
+  .nav-cta{display:none;}
+  .nav-links{gap:1.8rem;}
 }
 @media(prefers-reduced-motion:reduce){
   .ticker-track{animation:none}

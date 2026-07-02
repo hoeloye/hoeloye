@@ -238,7 +238,7 @@ nav{transition:background .4s,border-color .4s}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── SECTION BASE ── */
-.section{padding:11rem 5rem}
+.section{padding:11rem 5rem;position:relative}
 .section-label{
   font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;
   color:var(--mist);opacity:.65;margin-bottom:6rem;
@@ -453,6 +453,7 @@ footer{
   background:var(--deep);padding:3.5rem 5rem;
   display:grid;grid-template-columns:1fr auto 1fr;
   align-items:center;border-top:1px solid var(--line);gap:2rem;
+  position:relative;
 }
 .footer-logo{
   font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
@@ -628,6 +629,32 @@ footer{
 .ebook-buy:hover{background:var(--cream);color:var(--black);border-color:var(--cream)}
 @media(max-width:900px){.ebook-card{flex-direction:column;align-items:flex-start}.ebook-card-right{text-align:left}}
 
+
+/* ── GRAIN TEXTURE ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:50;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:200px 200px;
+  opacity:.032;mix-blend-mode:soft-light;
+}
+
+/* ── BOTANICAL ELEMENTS ── */
+.botanical{position:absolute;pointer-events:none;overflow:visible;opacity:0;transition:opacity 1.8s ease;z-index:1;}
+.vine-path{stroke:#C9A84C;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+.botanical-hero{left:1.5%;bottom:0;width:80px;}
+.botanical-services{right:3.5%;top:6%;width:90px;}
+.botanical-footer{left:0;top:50%;transform:translateY(-50%);width:105px;}
+
+@media(max-width:900px){
+  .botanical-hero{width:52px;}
+  .botanical-services{width:58px;right:1%;}
+  .botanical-footer{width:68px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .botanical{display:none;}
+  body::before{display:none;}
+}
 </style>
 </head>
 <body>
@@ -647,6 +674,20 @@ footer{
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+
+  <!-- botanical: hero vine -->
+  <svg class="botanical botanical-hero" data-opacity="0.18" viewBox="0 0 88 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="vine-path" d="M 44 472 C 40 432 54 402 42 364 C 30 326 48 294 36 256 C 24 218 44 184 32 146 C 20 108 40 74 26 36 C 20 16 24 6 32 2" stroke-width="0.9"/>
+    <path class="vine-path" d="M 42 364 C 28 352 16 344 6 330" stroke-width="0.7"/>
+    <path class="vine-path" d="M 6 330 C -4 314 -4 296 6 290 C 16 284 24 300 6 330 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 6 330 C 0 344 2 360 12 364 C 22 368 26 352 6 330 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 36 256 C 52 242 66 236 78 222" stroke-width="0.7"/>
+    <path class="vine-path" d="M 78 222 C 88 206 88 188 80 182 C 72 176 62 190 78 222 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 62 238 C 70 224 72 210 66 202 C 60 194 50 202 62 238 Z" stroke-width="0.6"/>
+    <path class="vine-path" d="M 32 146 C 18 134 12 116 20 108 C 28 100 40 112 32 146 Z" stroke-width="0.6"/>
+    <path class="vine-path" d="M 32 2 C 22 -10 12 -12 10 -4 C 8 4 16 12 32 2 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 26 36 C 16 26 10 30 12 38 C 14 46 26 42 26 36" stroke-width="0.5"/>
+  </svg>
   <div class="hero-text">
     <p class="hero-eyebrow">Virtual Fitness &mdash; Est. Lagos</p>
     <h1 class="hero-headline">
@@ -698,6 +739,15 @@ footer{
 
 <!-- SERVICES -->
 <section class="section services" id="services">
+  <!-- botanical: services sprig -->
+  <svg class="botanical botanical-services" data-opacity="0.15" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="vine-path" d="M 90 8 C 76 18 62 30 50 46 C 38 62 28 80 20 98" stroke-width="0.9"/>
+    <path class="vine-path" d="M 50 46 C 36 36 24 40 20 50 C 16 60 28 68 50 46 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 50 46 C 62 34 78 32 84 42 C 90 52 78 62 50 46 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 28 80 C 14 72 6 76 4 86 C 2 96 14 102 28 80 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 28 80 C 38 68 52 66 56 76 C 60 86 50 94 28 80 Z" stroke-width="0.6"/>
+    <path class="vine-path" d="M 20 98 C 14 110 10 114 12 122 C 14 130 22 126 20 98" stroke-width="0.5"/>
+  </svg>
   <h2 class="services-heading">Services</h2>
   <ul class="services-list">
     <li class="reveal" style="transition-delay:.05s">
@@ -805,6 +855,14 @@ footer{
 
 <!-- FOOTER -->
 <footer>
+  <!-- botanical: footer leaves -->
+  <svg class="botanical botanical-footer" data-opacity="0.16" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="vine-path" d="M 6 80 C 18 60 36 44 58 32 C 80 20 100 14 108 10" stroke-width="0.9"/>
+    <path class="vine-path" d="M 58 32 C 52 14 60 2 70 2 C 80 2 84 18 58 32 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 58 32 C 44 40 30 38 24 28 C 18 18 26 6 58 32 Z" stroke-width="0.7"/>
+    <path class="vine-path" d="M 100 14 C 96 2 106 -6 114 -2 C 122 2 120 16 100 14 Z" stroke-width="0.6"/>
+    <path class="vine-path" d="M 26 60 C 18 46 22 32 30 30 C 38 28 44 42 26 60 Z" stroke-width="0.6"/>
+  </svg>
   <span class="footer-logo">Astro Bodyshop</span>
   <div class="footer-socials">
     <a href="https://instagram.com/hoeloye" target="_blank" rel="noopener" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="#C9A84C" stroke="none"/></svg>Instagram</a>
@@ -1187,5 +1245,30 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
   </div>
 </div>
 
+<script>
+// ── BOTANICAL VINE DRAW ──
+(function(){
+  var paths=document.querySelectorAll('.vine-path');
+  paths.forEach(function(p){
+    var len=Math.ceil(p.getTotalLength());
+    p.style.strokeDasharray=len;
+    p.style.strokeDashoffset=len;
+  });
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      var el=entry.target;
+      var opac=el.dataset.opacity||'0.18';
+      el.style.opacity=opac;
+      el.querySelectorAll('.vine-path').forEach(function(p,i){
+        p.style.transition='stroke-dashoffset '+(2.6+i*0.08)+'s '+(i*0.06)+'s cubic-bezier(0.4,0,0.2,1)';
+        p.style.strokeDashoffset='0';
+      });
+      obs.unobserve(el);
+    });
+  },{threshold:0.05});
+  document.querySelectorAll('.botanical').forEach(function(el){obs.observe(el);});
+})();
+</script>
 </body>
 </html>

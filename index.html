@@ -943,8 +943,8 @@ async function submitBooking(e){
       document.getElementById('booking-form-wrap').style.display='none';
       const s=document.getElementById('booking-success');s.style.display='block';
       setTimeout(()=>{ window.location.href='https://wa.me/message/BFJYP7KFU3A4O1'; },2000);
-    }else{btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong — please try again.');}
-  }catch{btn.disabled=false;btn.textContent='Send Message';alert('Could not send — check your connection and try again.');}
+    }else{btn.disabled=false;btn.textContent='Consult';alert('Something went wrong — please try again.');}
+  }catch{btn.disabled=false;btn.textContent='Consult';alert('Could not send — check your connection and try again.');}
 }
 
 /* ── CURRENCY CONVERTER ── */
@@ -1234,7 +1234,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
             <span class="form-check-label">Keep me in the loop — tips, new programs, and offers from Ayo</span>
           </label>
         </div>
-        <button type="submit" class="form-submit" id="form-submit-btn">Send Message</button>
+        <button type="submit" class="form-submit" id="form-submit-btn">Consult</button>
       </form>
     </div>
     <div class="overlay-success" id="booking-success">

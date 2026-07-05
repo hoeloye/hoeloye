@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payment Received &mdash; Astro Bodyshop</title>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#060f0a"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --black:#060f0a;
+  --deep:#0d1f18;
+  --base:#183029;
+  --mid:#1e3d2f;
+  --cream:#c8b89a;
+  --mist:#7a9e8e;
+  --white:#f0ede8;
+  --line:rgba(240,237,232,0.07);
+}
+
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+
+.card{max-width:480px;width:100%;padding:1rem 0}
+.eyebrow{font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;color:var(--mist);opacity:.7;margin-bottom:1.5rem}
+.title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5vw,2.8rem);line-height:1.1;letter-spacing:-.015em;margin-bottom:1rem}
+.title em{font-style:italic;color:var(--cream)}
+.sub{font-size:.82rem;line-height:1.9;color:rgba(240,237,232,.45);max-width:42ch;margin-bottom:2.5rem}
+
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--mist);opacity:.6;margin-bottom:.5rem}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--mid);border:1px solid var(--line);padding:.75rem 1rem;color:var(--white);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:300;outline:none;appearance:none;transition:border-color .25s}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(240,237,232,.2)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(200,184,154,.4)}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9e8e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer}
+.form-select option{background:var(--deep)}
+.form-textarea{resize:vertical;min-height:90px}
+.form-submit{width:100%;padding:1rem 2rem;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--black);background:var(--cream);border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:background .3s,opacity .2s}
+.form-submit:hover{background:#d8c8aa}
+.form-submit:disabled{opacity:.5;cursor:not-allowed}
+
+.skip-link{display:block;text-align:center;margin-top:1.5rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,232,.3);text-decoration:none;transition:color .3s}
+.skip-link:hover{color:var(--cream)}
+
+.success{display:none;text-align:center;padding:2rem 0}
+.success-ring{width:4rem;height:4rem;border:1px solid rgba(200,184,154,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--cream)}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:.5rem}
+.success-sub{font-size:.78rem;line-height:1.8;color:rgba(240,237,232,.42)}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div id="form-wrap">
+    <p class="eyebrow">Payment Received</p>
+    <h1 class="title">Welcome to<br><em>Astro Bodyshop.</em></h1>
+    <p class="sub">Your consultation is booked. Tell Ayo a little about your goals so your 20 minutes together count.</p>
+    <form id="intake-form" onsubmit="submitIntake(event)" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="f-name">Your name</label>
+        <input class="form-input" type="text" id="f-name" name="name" placeholder="First & last name" autocomplete="name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-email">Email address</label>
+        <input class="form-input" type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-goal">Primary goal</label>
+        <select class="form-select" id="f-goal" name="goal">
+          <option value="" disabled selected>Select your main goal...</option>
+          <option>Lose body fat</option>
+          <option>Build muscle &amp; strength</option>
+          <option>Improve fitness &amp; endurance</option>
+          <option>Body recomposition</option>
+          <option>Athletic performance</option>
+          <option>General health &amp; lifestyle</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-notes">Anything else?</label>
+        <textarea class="form-textarea" id="f-notes" name="notes" placeholder="Where you're at, what you've tried before, preferred call times..."></textarea>
+      </div>
+      <input type="hidden" name="source" value="Consultation — post-payment intake">
+      <button type="submit" class="form-submit" id="submit-btn">Consult</button>
+    </form>
+    <a href="https://wa.me/message/BFJYP7KFU3A4O1" class="skip-link">Skip &mdash; message Ayo directly on WhatsApp</a>
+  </div>
+
+  <div class="success" id="success">
+    <div class="success-ring">&#10003;</div>
+    <h2 class="success-title">Got it.</h2>
+    <p class="success-sub">Ayo has your details and will reach out within 24 hours to confirm your call time. Talk soon.</p>
+  </div>
+</div>
+
+<script>
+async function submitIntake(e){
+  e.preventDefault();
+  const form=document.getElementById('intake-form');
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Sending...';
+  try{
+    const res=await fetch('https://formspree.io/f/mrewgepb',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){
+      document.getElementById('form-wrap').style.display='none';
+      document.getElementById('success').style.display='block';
+    }else{btn.disabled=false;btn.textContent='Consult';alert('Something went wrong — please try again.');}
+  }catch{btn.disabled=false;btn.textContent='Consult';alert('Could not send — check your connection and try again.');}
+}
+</script>
+</body>
+</html>

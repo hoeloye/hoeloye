@@ -667,7 +667,7 @@ body::before{
   <nav class="nav-links">
     <a href="#services" class="nav-link-ul">Services</a>
     <a href="#about" class="nav-link-ul">About</a>
-    <a href="https://buy.stripe.com/8x200jgMygtsez69WT4ZG00" rel="noopener" class="nav-cta"><span>Consult Ayo</span></a>
+    <button onclick="openConsult()" class="nav-cta"><span>Consult Ayo</span></button>
   </nav>
 </nav>
 
@@ -697,7 +697,7 @@ body::before{
     </h1>
     <p class="hero-descriptor">Online coaching, nutrition, and movement &mdash; built for people who take themselves seriously.</p>
     <div class="hero-btns">
-      <a href="https://buy.stripe.com/8x200jgMygtsez69WT4ZG00" rel="noopener" class="mag-btn primary" data-mag><span>Consult Ayo</span></a>
+      <a href="#" onclick="openConsult();return false;" class="mag-btn primary" data-mag><span>Consult Ayo</span></a>
       <a href="#services" class="mag-btn ghost" data-mag><span>See services</span></a>
     </div>
   </div>
@@ -848,7 +848,7 @@ body::before{
   <h2 class="cta-heading">Ready to<br><em>begin?</em></h2>
   <div class="cta-right">
     <p class="cta-body">Reserve a one-on-one slot with Ayo for &#8358;10,000 ($8). Twenty minutes of focused, personal clarity on exactly what your next move should be.</p>
-    <a href="https://buy.stripe.com/8x200jgMygtsez69WT4ZG00" rel="noopener" class="mag-btn primary" data-mag><span>Consult Ayo</span></a>
+    <button onclick="openConsult()" class="mag-btn primary" data-mag><span>Consult Ayo</span></button>
     <a href="#services" class="cta-link" data-mag><span>Explore services</span> <span class="arr">&rarr;</span></a>
   </div>
 </section>
@@ -922,6 +922,29 @@ function closeOverlay(id){document.getElementById('overlay-'+id).classList.remov
 function openService(id){openOverlay(id);}
 function openBooking(){openOverlay('booking');}
 function chainToBooking(id){closeOverlay(id);setTimeout(openBooking,220);}
+function openConsult(){openOverlay('consult');}
+function chainToConsult(id){closeOverlay(id);setTimeout(openConsult,220);}
+
+/* ── CONSULTATION PAYMENT ── */
+let _consultCurrency = 'NGN';
+const CONSULT_LINKS = {
+  NGN: null, // Paystack link pending
+  USD: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00',
+};
+function setConsultCurrency(code, btn){
+  _consultCurrency = code;
+  document.querySelectorAll('#consult-currency-tabs .currency-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('consult-price').textContent = code === 'NGN' ? '₦10,000' : '$8';
+}
+function payConsult(){
+  const link = CONSULT_LINKS[_consultCurrency];
+  if(link){
+    window.location.href = link;
+  }else{
+    alert('Naira payments launch shortly — switch to USD to pay now, or message Ayo on WhatsApp.');
+  }
+}
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
 });
@@ -1068,7 +1091,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     </div>
     <p class="pricing-note">Prices shown in NGN. Switch currency above for live USD &amp; GBP equivalents.</p>
     <div class="overlay-actions">
-      <a href="https://buy.stripe.com/8x200jgMygtsez69WT4ZG00" rel="noopener" class="mag-btn primary"><span>Consult Ayo</span></a>
+      <button class="mag-btn primary" onclick="chainToConsult('coaching')"><span>Consult Ayo</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('coaching')"><span>&larr; Back</span></button>
     </div>
   </div>
@@ -1191,6 +1214,36 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="chainToBooking('mobility')"><span>Book Session</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-backdrop" id="overlay-consult" role="dialog" aria-modal="true">
+  <div class="overlay-panel">
+    <button class="overlay-close" onclick="closeOverlay('consult')">✕</button>
+    <p class="overlay-eyebrow">The Clarity Call</p>
+    <h3 class="overlay-title">Consult Ayo</h3>
+    <p class="overlay-sub">A focused 20-minute virtual consultation. We cover where you are, where you want to be, and map out the right plan to get there — training, nutrition, and mobility.</p>
+    <p class="overlay-includes">What happens on the call</p>
+    <ul class="overlay-list">
+      <li>20-minute 1-on-1 video call with Ayo</li>
+      <li>Goals &amp; current lifestyle assessment</li>
+      <li>A clear, personalised next-step plan</li>
+      <li>Direct path into coaching, nutrition, or mobility programmes</li>
+    </ul>
+    <div class="currency-tabs" id="consult-currency-tabs">
+      <button class="currency-tab active" onclick="setConsultCurrency('NGN',this)">&#8358; NGN</button>
+      <button class="currency-tab" onclick="setConsultCurrency('USD',this)">$ USD</button>
+    </div>
+    <div class="overlay-price-box">
+      <div class="overlay-price-label">Consultation fee</div>
+      <div class="overlay-price-value">
+        <span id="consult-price">&#8358;10,000</span>
+      </div>
+    </div>
+    <div class="overlay-actions">
+      <button class="mag-btn primary" onclick="payConsult()"><span>Consult</span></button>
+      <button class="mag-btn ghost" onclick="closeOverlay('consult')"><span>&larr; Back</span></button>
     </div>
   </div>
 </div>

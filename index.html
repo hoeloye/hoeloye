@@ -67,10 +67,10 @@ nav.scrolled{background:rgba(6,15,10,0.85);backdrop-filter:blur(20px);border-bot
 nav{transition:background .4s,border-color .4s}
 
 .nav-logo{
-  font-family:'Inter',sans-serif;font-size:clamp(1rem,2.2vw,1.5rem);font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--white);
+  display:flex;align-items:center;
   text-decoration:none;white-space:nowrap;
 }
+.nav-logo img{height:clamp(28px,4vw,38px);width:auto;display:block}
 /* nav link underline wipe */
 .nav-link-ul{
   text-decoration:none;
@@ -456,9 +456,9 @@ footer{
   position:relative;
 }
 .footer-logo{
-  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
-  color:rgba(240,237,232,.3);
+  display:inline-flex;align-items:center;
 }
+.footer-logo img{height:18px;width:auto;display:block;opacity:.75}
 .footer-socials{display:flex;gap:3rem;justify-content:center}
 .footer-social{
   font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
@@ -663,7 +663,7 @@ body::before{
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">Astro Bodyshop</a>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="Astro Bodyshop" width="520" height="257"></a>
   <nav class="nav-links">
     <a href="#services" class="nav-link-ul">Services</a>
     <a href="#about" class="nav-link-ul">About</a>
@@ -863,7 +863,7 @@ body::before{
     <path class="vine-path" d="M 100 14 C 96 2 106 -6 114 -2 C 122 2 120 16 100 14 Z" stroke-width="0.6"/>
     <path class="vine-path" d="M 26 60 C 18 46 22 32 30 30 C 38 28 44 42 26 60 Z" stroke-width="0.6"/>
   </svg>
-  <span class="footer-logo">Astro Bodyshop</span>
+  <span class="footer-logo"><img src="logo.png" alt="Astro Bodyshop" width="520" height="257"></span>
   <div class="footer-socials">
     <a href="https://instagram.com/hoeloye" target="_blank" rel="noopener" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="#C9A84C" stroke="none"/></svg>Instagram</a>
     <a href="https://tiktok.com/@hoeloye" target="_blank" rel="noopener" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24" fill="#C9A84C"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.7s-2.18.05-3.01-.01z"/></svg>TikTok</a>

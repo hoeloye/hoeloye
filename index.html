@@ -932,6 +932,7 @@ const STRIPE_PRODUCTS = {
   'ebook-general':  { usd: 14,  link: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03' },
   'nutrition-bulk': { usd: 18,  link: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06' },
   'nutrition-cut':  { usd: 18,  link: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07' },
+  'mobility':       { usd: 18,  link: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08' },
 };
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
@@ -1008,7 +1009,9 @@ function buyNutrition(key){
   }
 }
 
+let _mobilityCurrency = 'NGN';
 function setMobilityCurrency(code, btn) {
+  _mobilityCurrency = code;
   document.querySelectorAll('#mob-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   const syms = { NGN: '₦', USD: '$' };
@@ -1016,12 +1019,23 @@ function setMobilityCurrency(code, btn) {
   const rate = _rates[code];
   document.querySelectorAll('.mobility-price').forEach(el => {
     const ngn = parseInt(el.dataset.ngn);
+    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
     if (code === 'NGN') {
       el.textContent = '₦' + ngn.toLocaleString();
+    } else if (code === 'USD' && fixed) {
+      el.textContent = '$' + fixed.usd.toLocaleString();
     } else {
       el.textContent = sym + Math.round(ngn * rate).toLocaleString();
     }
   });
+}
+function buyMobility(){
+  const product = STRIPE_PRODUCTS['mobility'];
+  if(_mobilityCurrency === 'USD' && product){
+    window.location.href = product.link;
+  }else{
+    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
+  }
 }
 
 let _trainingCurrency = 'NGN';
@@ -1197,7 +1211,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <button class="overlay-close" onclick="closeOverlay('mobility')">✕</button>
     <p class="overlay-eyebrow">Service 04</p>
     <h3 class="overlay-title">Mobility Work</h3>
-    <p class="overlay-sub">A single 20-minute virtual session with Ayo. Each booking is one session — pay per session, book as many as you need. Must be reserved at least 48 hours in advance.</p>
+    <p class="overlay-sub">A single 20-minute virtual session with Ayo — pay per session, book as many as you need. Pay by card in USD and finalize your date and time on WhatsApp, or message Ayo directly for NGN. Must be reserved at least 48 hours in advance.</p>
     <p class="overlay-includes">What happens in your session</p>
     <ul class="overlay-list">
       <li>20-minute virtual 1-on-1 with Ayo</li>
@@ -1212,13 +1226,13 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       <button class="currency-tab" onclick="setMobilityCurrency('USD',this)">$ USD</button>
     </div>
     <div class="overlay-price-box">
-      <div class="overlay-price-label">Starting from</div>
+      <div class="overlay-price-label">Session fee</div>
       <div class="overlay-price-value">
-        <span class="mobility-price" data-ngn="30000">&#8358;30,000</span><span class="overlay-price-terms"> / session</span>
+        <span class="mobility-price" data-ngn="25000" data-usd-key="mobility">&#8358;25,000</span><span class="overlay-price-terms"> / session</span>
       </div>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="chainToConsult('mobility')"><span>Book Session</span></button>
+      <button class="mag-btn primary" onclick="buyMobility()"><span>Book Session</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
     </div>
   </div>

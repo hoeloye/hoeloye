@@ -624,6 +624,7 @@ footer{
 .price-amount{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);letter-spacing:-.01em;transition:opacity .2s}
 .pricing-tier-period{font-size:.6rem;color:rgba(240,237,232,.3);letter-spacing:.08em}
 .pricing-note{font-size:.62rem;color:rgba(240,237,232,.28);margin-top:1.25rem;margin-bottom:1.75rem;letter-spacing:.04em;line-height:1.7}
+.pricing-tier-buy{margin-top:.9rem}
 
 
 /* ── EBOOK CARDS ── */
@@ -954,6 +955,15 @@ function payConsult(){
     alert('Naira payments launch shortly — switch to USD to pay now, or message Ayo on WhatsApp.');
   }
 }
+
+/* ── STRIPE PRODUCT LINKS (USD, card checkout) — NGN/GBP still route to WhatsApp ── */
+const STRIPE_PRODUCTS = {
+  'coaching-x10':   { usd: 94,  link: 'https://buy.stripe.com/28EaEX9k64KKgHe5GD4ZG04' },
+  'coaching-x20':   { usd: 181, link: 'https://buy.stripe.com/bJe8wP7bY3GG0Igd954ZG05' },
+  'ebook-muscle':   { usd: 22,  link: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01' },
+  'ebook-strength': { usd: 22,  link: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02' },
+  'ebook-general':  { usd: 14,  link: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03' },
+};
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
 });
@@ -986,21 +996,34 @@ fetch('https://open.er-api.com/v6/latest/NGN')
   .then(d => { if(d.rates){ _rates.USD = d.rates.USD; _rates.GBP = d.rates.GBP; } })
   .catch(() => {});
 
+let _coachingCurrency = 'NGN';
 function setCurrency(code, btn) {
-  document.querySelectorAll('.currency-tab').forEach(t => t.classList.remove('active'));
+  _coachingCurrency = code;
+  document.querySelectorAll('#overlay-coaching .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   const syms = { NGN: '₦', USD: '$', GBP: '£' };
   const sym = syms[code];
   const rate = _rates[code];
-  document.querySelectorAll('.price-amount').forEach(el => {
+  document.querySelectorAll('#overlay-coaching .price-amount').forEach(el => {
     const ngn = parseInt(el.dataset.ngn);
+    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
     if (code === 'NGN') {
       el.textContent = '₦' + ngn.toLocaleString();
+    } else if (code === 'USD' && fixed) {
+      el.textContent = '$' + fixed.usd.toLocaleString();
     } else {
       const converted = Math.round(ngn * rate);
       el.textContent = sym + converted.toLocaleString();
     }
   });
+}
+function buyCoaching(key){
+  const product = STRIPE_PRODUCTS[key];
+  if(_coachingCurrency === 'USD' && product){
+    window.location.href = product.link;
+  }else{
+    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
+  }
 }
 
 function setNutritionCurrency(code, btn) {
@@ -1035,23 +1058,36 @@ function setMobilityCurrency(code, btn) {
   });
 }
 
+let _trainingCurrency = 'NGN';
 function setEbookCurrency(code, btn) {
+  _trainingCurrency = code;
   document.querySelectorAll('#ebook-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   const syms = { NGN: '₦', USD: '$', GBP: '£' };
   const sym = syms[code];
   const rate = _rates[code];
-  document.querySelectorAll('.ebook-price').forEach(el => {
+  document.querySelectorAll('#overlay-training .ebook-price').forEach(el => {
     const ngn = parseInt(el.dataset.ngn);
+    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
     if (code === 'NGN') {
       el.textContent = '₦' + ngn.toLocaleString();
+    } else if (code === 'USD' && fixed) {
+      el.textContent = '$' + fixed.usd.toLocaleString();
     } else {
       el.textContent = sym + Math.round(ngn * rate).toLocaleString();
     }
   });
 }
 
-function buyEbook(name) {
+function buyEbook(key) {
+  const product = STRIPE_PRODUCTS[key];
+  if(_trainingCurrency === 'USD' && product){
+    window.location.href = product.link;
+  }else{
+    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
+  }
+}
+function buyWhatsapp() {
   window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
 }
 
@@ -1086,19 +1122,21 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
       <span class="pricing-tier-name">Virtual Coaching &times;10</span>
       <span class="pricing-tier-desc">10 sessions per month</span>
       <div class="pricing-tier-price">
-        <span class="price-amount" data-ngn="130000">&#8358;130,000</span>
+        <span class="price-amount" data-ngn="130000" data-usd-key="coaching-x10">&#8358;130,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
+      <button class="ebook-buy pricing-tier-buy" onclick="buyCoaching('coaching-x10')">Subscribe &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Virtual Coaching &times;20</span>
       <span class="pricing-tier-desc">20 sessions per month</span>
       <div class="pricing-tier-price">
-        <span class="price-amount" data-ngn="250000">&#8358;250,000</span>
+        <span class="price-amount" data-ngn="250000" data-usd-key="coaching-x20">&#8358;250,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
+      <button class="ebook-buy pricing-tier-buy" onclick="buyCoaching('coaching-x20')">Subscribe &rarr;</button>
     </div>
-    <p class="pricing-note">Prices shown in NGN. Switch currency above for live USD &amp; GBP equivalents.</p>
+    <p class="pricing-note">NGN &amp; GBP: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="chainToConsult('coaching')"><span>Consult Ayo</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('coaching')"><span>&larr; Back</span></button>
@@ -1111,7 +1149,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <button class="overlay-close" onclick="closeOverlay('training')">✕</button>
     <p class="overlay-eyebrow">Service 02</p>
     <h3 class="overlay-title">Workout Routines</h3>
-    <p class="overlay-sub">4-week structured ebook programmes designed for real results. Choose your goal, complete your purchase via WhatsApp, and receive your ebook instantly.</p>
+    <p class="overlay-sub">4-week structured ebook programmes designed for real results. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN &amp; GBP.</p>
     <div class="currency-tabs" id="ebook-currency-tabs">
       <button class="currency-tab active" onclick="setEbookCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setEbookCurrency('USD',this)">$ USD</button>
@@ -1124,8 +1162,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
           <span class="ebook-card-desc">4-week muscle building programme &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="30000">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="buyEbook('Muscle Building Routine')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-ngn="30000" data-usd-key="ebook-muscle">&#8358;30,000</span>
+          <button class="ebook-buy" onclick="buyEbook('ebook-muscle')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1134,8 +1172,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
           <span class="ebook-card-desc">4-week strength training programme &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="30000">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="buyEbook('Strength Training Routine')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-ngn="30000" data-usd-key="ebook-strength">&#8358;30,000</span>
+          <button class="ebook-buy" onclick="buyEbook('ebook-strength')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1144,8 +1182,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
           <span class="ebook-card-desc">4-week general fitness plan &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="20000">&#8358;20,000</span>
-          <button class="ebook-buy" onclick="buyEbook('General Fitness')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-ngn="20000" data-usd-key="ebook-general">&#8358;20,000</span>
+          <button class="ebook-buy" onclick="buyEbook('ebook-general')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
@@ -1174,7 +1212,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price nutrition-price" data-ngn="25000">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyEbook('Bulk Plan')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" onclick="buyWhatsapp()">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1184,7 +1222,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price nutrition-price" data-ngn="25000">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyEbook('Cut Plan')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" onclick="buyWhatsapp()">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>

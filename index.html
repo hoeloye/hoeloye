@@ -956,7 +956,7 @@ function payConsult(){
   }
 }
 
-/* ── STRIPE PRODUCT LINKS (USD, card checkout) — NGN/GBP still route to WhatsApp ── */
+/* ── STRIPE PRODUCT LINKS (USD, card checkout) — NGN still routes to WhatsApp ── */
 const STRIPE_PRODUCTS = {
   'coaching-x10':   { usd: 94,  link: 'https://buy.stripe.com/28EaEX9k64KKgHe5GD4ZG04' },
   'coaching-x20':   { usd: 181, link: 'https://buy.stripe.com/bJe8wP7bY3GG0Igd954ZG05' },
@@ -990,10 +990,10 @@ async function submitBooking(e){
 }
 
 /* ── CURRENCY CONVERTER ── */
-let _rates = { NGN: 1, USD: 0.00063, GBP: 0.00050 }; // fallback rates
+let _rates = { NGN: 1, USD: 0.00063 }; // fallback rate
 fetch('https://open.er-api.com/v6/latest/NGN')
   .then(r => r.json())
-  .then(d => { if(d.rates){ _rates.USD = d.rates.USD; _rates.GBP = d.rates.GBP; } })
+  .then(d => { if(d.rates){ _rates.USD = d.rates.USD; } })
   .catch(() => {});
 
 let _coachingCurrency = 'NGN';
@@ -1001,7 +1001,7 @@ function setCurrency(code, btn) {
   _coachingCurrency = code;
   document.querySelectorAll('#overlay-coaching .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$', GBP: '£' };
+  const syms = { NGN: '₦', USD: '$' };
   const sym = syms[code];
   const rate = _rates[code];
   document.querySelectorAll('#overlay-coaching .price-amount').forEach(el => {
@@ -1029,7 +1029,7 @@ function buyCoaching(key){
 function setNutritionCurrency(code, btn) {
   document.querySelectorAll('#nutrition-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$', GBP: '£' };
+  const syms = { NGN: '₦', USD: '$' };
   const sym = syms[code];
   const rate = _rates[code];
   document.querySelectorAll('.nutrition-price').forEach(el => {
@@ -1045,7 +1045,7 @@ function setNutritionCurrency(code, btn) {
 function setMobilityCurrency(code, btn) {
   document.querySelectorAll('#mob-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$', GBP: '£' };
+  const syms = { NGN: '₦', USD: '$' };
   const sym = syms[code];
   const rate = _rates[code];
   document.querySelectorAll('.mobility-price').forEach(el => {
@@ -1063,7 +1063,7 @@ function setEbookCurrency(code, btn) {
   _trainingCurrency = code;
   document.querySelectorAll('#ebook-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$', GBP: '£' };
+  const syms = { NGN: '₦', USD: '$' };
   const sym = syms[code];
   const rate = _rates[code];
   document.querySelectorAll('#overlay-training .ebook-price').forEach(el => {
@@ -1116,7 +1116,6 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <div class="currency-tabs">
       <button class="currency-tab active" onclick="setCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setCurrency('USD',this)">$ USD</button>
-      <button class="currency-tab" onclick="setCurrency('GBP',this)">&#163; GBP</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Virtual Coaching &times;10</span>
@@ -1136,7 +1135,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
       </div>
       <button class="ebook-buy pricing-tier-buy" onclick="buyCoaching('coaching-x20')">Subscribe &rarr;</button>
     </div>
-    <p class="pricing-note">NGN &amp; GBP: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
+    <p class="pricing-note">NGN: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="chainToConsult('coaching')"><span>Consult Ayo</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('coaching')"><span>&larr; Back</span></button>
@@ -1149,11 +1148,10 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <button class="overlay-close" onclick="closeOverlay('training')">✕</button>
     <p class="overlay-eyebrow">Service 02</p>
     <h3 class="overlay-title">Workout Routines</h3>
-    <p class="overlay-sub">4-week structured ebook programmes designed for real results. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN &amp; GBP.</p>
+    <p class="overlay-sub">4-week structured ebook programmes designed for real results. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
     <div class="currency-tabs" id="ebook-currency-tabs">
       <button class="currency-tab active" onclick="setEbookCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setEbookCurrency('USD',this)">$ USD</button>
-      <button class="currency-tab" onclick="setEbookCurrency('GBP',this)">&#163; GBP</button>
     </div>
     <div class="ebook-grid">
       <div class="ebook-card">
@@ -1202,7 +1200,6 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <div class="currency-tabs" id="nutrition-currency-tabs">
       <button class="currency-tab active" onclick="setNutritionCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setNutritionCurrency('USD',this)">$ USD</button>
-      <button class="currency-tab" onclick="setNutritionCurrency('GBP',this)">&#163; GBP</button>
     </div>
     <div class="ebook-grid">
       <div class="ebook-card">
@@ -1250,7 +1247,6 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <div class="currency-tabs" id="mob-currency-tabs">
       <button class="currency-tab active" onclick="setMobilityCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setMobilityCurrency('USD',this)">$ USD</button>
-      <button class="currency-tab" onclick="setMobilityCurrency('GBP',this)">&#163; GBP</button>
     </div>
     <div class="overlay-price-box">
       <div class="overlay-price-label">Starting from</div>

@@ -565,18 +565,6 @@ footer{
 .overlay-price-value{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);letter-spacing:-.01em}
 .overlay-price-terms{font-size:.6rem;color:rgba(240,237,232,.28);margin-left:.25rem;letter-spacing:.06em}
 .overlay-actions{display:flex;gap:.875rem;flex-wrap:wrap}
-/* form */
-.form-group{margin-bottom:1.25rem}
-.form-label{display:block;font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--mist);opacity:.6;margin-bottom:.5rem}
-.form-input,.form-select,.form-textarea{width:100%;background:var(--mid);border:1px solid var(--line);padding:.75rem 1rem;color:var(--white);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:300;outline:none;appearance:none;transition:border-color .25s}
-.form-input::placeholder,.form-textarea::placeholder{color:rgba(240,237,232,.2)}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(200,184,154,.4)}
-.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9e8e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer}
-.form-select option{background:var(--deep)}
-.form-textarea{resize:vertical;min-height:90px}
-.form-submit{width:100%;padding:1rem 2rem;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--black);background:var(--cream);border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:background .3s,opacity .2s}
-.form-submit:hover{background:#d8c8aa}
-.form-submit:disabled{opacity:.5;cursor:not-allowed}
 /* service button */
 .service-item-btn{display:grid;grid-template-columns:5ch 1fr auto;align-items:center;gap:5rem;padding:3.8rem 0;border:none;border-bottom:1px solid var(--line);background:none;width:100%;text-align:left;position:relative;overflow:hidden;color:inherit;cursor:pointer;transition:padding-left .5s cubic-bezier(.77,0,.18,1)}
 .service-item-btn::before{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(to right,var(--cream),transparent);transition:width .6s cubic-bezier(.77,0,.18,1)}
@@ -586,25 +574,6 @@ footer{
 .service-item-btn:hover::after{opacity:1;transform:translateX(0)}
 .service-item-btn:hover .service-name{color:var(--cream)}
 .service-item-btn:hover .service-desc{color:rgba(240,237,232,.45)}
-/* success */
-.form-check{display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;padding:.2rem 0;}
-.form-check input[type="checkbox"]{
-  appearance:none;-webkit-appearance:none;
-  width:1rem;height:1rem;flex-shrink:0;margin-top:.15rem;
-  border:1px solid rgba(200,184,154,.3);background:transparent;cursor:pointer;
-  transition:border-color .25s,background .25s;
-}
-.form-check input[type="checkbox"]:checked{
-  background:#C9A84C;border-color:#C9A84C;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23060f0a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:center;background-size:10px;
-}
-.form-check-label{font-size:.62rem;letter-spacing:.08em;color:rgba(240,237,232,.4);line-height:1.7;cursor:pointer;}
-.overlay-success{display:none;text-align:center;padding:3rem 0}
-.success-ring{width:4rem;height:4rem;border:1px solid rgba(200,184,154,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--cream);animation:successIn .5s cubic-bezier(.34,1.56,.64,1) both}
-@keyframes successIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.success-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:.5rem}
-.success-sub{font-size:.75rem;color:rgba(240,237,232,.38);letter-spacing:.05em}
 @media(max-width:900px){
   .overlay-panel{padding:2rem 1.5rem}
   .overlay-actions{flex-direction:column}
@@ -930,8 +899,6 @@ document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observ
 function openOverlay(id){document.getElementById('overlay-'+id).classList.add('is-open');document.body.style.overflow='hidden';}
 function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';}
 function openService(id){openOverlay(id);}
-function openBooking(){openOverlay('booking');}
-function chainToBooking(id){closeOverlay(id);setTimeout(openBooking,220);}
 function openConsult(){openOverlay('consult');}
 function chainToConsult(id){closeOverlay(id);setTimeout(openConsult,220);}
 
@@ -963,6 +930,8 @@ const STRIPE_PRODUCTS = {
   'ebook-muscle':   { usd: 22,  link: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01' },
   'ebook-strength': { usd: 22,  link: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02' },
   'ebook-general':  { usd: 14,  link: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03' },
+  'nutrition-bulk': { usd: 18,  link: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06' },
+  'nutrition-cut':  { usd: 18,  link: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07' },
 };
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
@@ -972,22 +941,6 @@ document.addEventListener('keydown',e=>{
   document.querySelectorAll('.overlay-backdrop.is-open').forEach(el=>{el.classList.remove('is-open');});
   document.body.style.overflow='';
 });
-
-/* ── BOOKING FORM ── */
-async function submitBooking(e){
-  e.preventDefault();
-  const form=document.getElementById('booking-form');
-  const btn=document.getElementById('form-submit-btn');
-  btn.disabled=true;btn.textContent='Sending...';
-  try{
-    const res=await fetch('https://formspree.io/f/mrewgepb',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-    if(res.ok){
-      document.getElementById('booking-form-wrap').style.display='none';
-      const s=document.getElementById('booking-success');s.style.display='block';
-      setTimeout(()=>{ window.location.href='https://wa.me/message/BFJYP7KFU3A4O1'; },2000);
-    }else{btn.disabled=false;btn.textContent='Consult';alert('Something went wrong — please try again.');}
-  }catch{btn.disabled=false;btn.textContent='Consult';alert('Could not send — check your connection and try again.');}
-}
 
 /* ── CURRENCY CONVERTER ── */
 let _rates = { NGN: 1, USD: 0.00063 }; // fallback rate
@@ -1026,7 +979,9 @@ function buyCoaching(key){
   }
 }
 
+let _nutritionCurrency = 'NGN';
 function setNutritionCurrency(code, btn) {
+  _nutritionCurrency = code;
   document.querySelectorAll('#nutrition-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   const syms = { NGN: '₦', USD: '$' };
@@ -1034,12 +989,23 @@ function setNutritionCurrency(code, btn) {
   const rate = _rates[code];
   document.querySelectorAll('.nutrition-price').forEach(el => {
     const ngn = parseInt(el.dataset.ngn);
+    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
     if (code === 'NGN') {
       el.textContent = '₦' + ngn.toLocaleString();
+    } else if (code === 'USD' && fixed) {
+      el.textContent = '$' + fixed.usd.toLocaleString();
     } else {
       el.textContent = sym + Math.round(ngn * rate).toLocaleString();
     }
   });
+}
+function buyNutrition(key){
+  const product = STRIPE_PRODUCTS[key];
+  if(_nutritionCurrency === 'USD' && product){
+    window.location.href = product.link;
+  }else{
+    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
+  }
 }
 
 function setMobilityCurrency(code, btn) {
@@ -1087,12 +1053,9 @@ function buyEbook(key) {
     window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
   }
 }
-function buyWhatsapp() {
-  window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
-}
 
 /* Update cursor for new interactive elements */
-document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEach(el=>{
+document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('link'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('link'));
 });
@@ -1196,7 +1159,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <button class="overlay-close" onclick="closeOverlay('nutrition')">✕</button>
     <p class="overlay-eyebrow">Service 03</p>
     <h3 class="overlay-title">Nutrition Planning</h3>
-    <p class="overlay-sub">Structured nutrition ebooks built around your goal. Choose your plan, complete your purchase via WhatsApp, and receive your ebook instantly.</p>
+    <p class="overlay-sub">Structured nutrition ebooks built around your goal. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
     <div class="currency-tabs" id="nutrition-currency-tabs">
       <button class="currency-tab active" onclick="setNutritionCurrency('NGN',this)">&#8358; NGN</button>
       <button class="currency-tab" onclick="setNutritionCurrency('USD',this)">$ USD</button>
@@ -1208,8 +1171,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
           <span class="ebook-card-desc">Structured nutrition plan for muscle gain &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price nutrition-price" data-ngn="25000">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyWhatsapp()">Get Ebook &rarr;</button>
+          <span class="ebook-price nutrition-price" data-ngn="25000" data-usd-key="nutrition-bulk">&#8358;25,000</span>
+          <button class="ebook-buy" onclick="buyNutrition('nutrition-bulk')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1218,8 +1181,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
           <span class="ebook-card-desc">Structured nutrition plan for fat loss &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price nutrition-price" data-ngn="25000">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyWhatsapp()">Get Ebook &rarr;</button>
+          <span class="ebook-price nutrition-price" data-ngn="25000" data-usd-key="nutrition-cut">&#8358;25,000</span>
+          <button class="ebook-buy" onclick="buyNutrition('nutrition-cut')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
@@ -1255,7 +1218,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
       </div>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="chainToBooking('mobility')"><span>Book Session</span></button>
+      <button class="mag-btn primary" onclick="chainToConsult('mobility')"><span>Book Session</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
     </div>
   </div>
@@ -1287,56 +1250,6 @@ document.querySelectorAll('.service-item-btn,.overlay-close,.form-submit').forEa
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="payConsult()"><span>Consult</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('consult')"><span>&larr; Back</span></button>
-    </div>
-  </div>
-</div>
-
-<!-- BOOKING FORM OVERLAY -->
-<div class="overlay-backdrop" id="overlay-booking" role="dialog" aria-modal="true">
-  <div class="overlay-panel">
-    <button class="overlay-close" onclick="closeOverlay('booking')">✕</button>
-    <div id="booking-form-wrap">
-      <p class="overlay-eyebrow">Consultation Slot &mdash; &#8358;10,000 ($8)</p>
-      <h3 class="overlay-title">Consult Ayo.</h3>
-      <p class="overlay-sub">Reserve your slot for &#8358;10,000 ($8). Share a bit about your goals and I'll send payment details to confirm your booking within a few hours.</p>
-      <form id="booking-form" onsubmit="submitBooking(event)" novalidate>
-        <div class="form-group">
-          <label class="form-label" for="f-name">Your name</label>
-          <input class="form-input" type="text" id="f-name" name="name" placeholder="First & last name" autocomplete="name" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="f-email">Email address</label>
-          <input class="form-input" type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="f-goal">Primary goal</label>
-          <select class="form-select" id="f-goal" name="goal">
-            <option value="" disabled selected>Select your main goal...</option>
-            <option>Lose body fat</option>
-            <option>Build muscle &amp; strength</option>
-            <option>Improve fitness &amp; endurance</option>
-            <option>Body recomposition</option>
-            <option>Athletic performance</option>
-            <option>General health &amp; lifestyle</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="f-notes">Anything else?</label>
-          <textarea class="form-textarea" id="f-notes" name="notes" placeholder="Where you're at, what you've tried before..."></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-check">
-            <input type="checkbox" name="newsletter" value="yes">
-            <span class="form-check-label">Keep me in the loop — tips, new programs, and offers from Ayo</span>
-          </label>
-        </div>
-        <button type="submit" class="form-submit" id="form-submit-btn">Consult</button>
-      </form>
-    </div>
-    <div class="overlay-success" id="booking-success">
-      <div class="success-ring">&#10003;</div>
-      <h3 class="success-title">Message sent.</h3>
-      <p class="success-sub">I'll be in touch within 24 hours. Talk soon.</p>
     </div>
   </div>
 </div>

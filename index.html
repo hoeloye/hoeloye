@@ -642,6 +642,11 @@ footer{
 .pricing-tier-period{font-size:.6rem;color:rgba(240,237,232,.3);letter-spacing:.08em}
 .pricing-note{font-size:.62rem;color:rgba(240,237,232,.28);margin-top:1.25rem;margin-bottom:1.75rem;letter-spacing:.04em;line-height:1.7}
 .pricing-tier-buy{margin-top:.9rem}
+.pricing-tier.featured{border-color:rgba(201,168,76,.45);position:relative;margin-top:1.4rem}
+.pricing-tier-badge{position:absolute;top:-.55rem;left:1.25rem;background:var(--deep);padding:0 .6rem;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cream);white-space:nowrap}
+.pricing-tier-points{list-style:none;margin-top:.75rem}
+.pricing-tier-points li{display:flex;gap:.6rem;align-items:baseline;font-size:.68rem;line-height:1.8;color:rgba(240,237,232,.45);padding:.15rem 0}
+.pricing-tier-points li::before{content:'\2014';color:var(--cream);opacity:.5;font-size:.6rem;flex-shrink:0}
 
 
 /* ── EBOOK CARDS ── */
@@ -814,7 +819,7 @@ body::before{
       <button class="service-item-btn" onclick="openService('mobility')">
         <span class="service-num">04</span>
         <span class="service-name">Mobility Work</span>
-        <span class="service-desc">Flexibility, recovery<br>and joint longevity<span class="service-price"><span data-price="mobility">&#8358;25,000</span> / session</span></span>
+        <span class="service-desc">Flexibility, recovery<br>and joint longevity<span class="service-price">from <span data-price="mobility">&#8358;25,000</span> / session</span></span>
       </button>
     </li>
   </ul>
@@ -1030,7 +1035,9 @@ const PAY_LINKS = {
   'ebook-general':  { ngn: 20000,  usd: 14,  stripe: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03', paystack: null },
   'nutrition-bulk': { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06', paystack: null },
   'nutrition-cut':  { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07', paystack: null },
-  'mobility':       { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: null },
+  'mobility':         { ngn: 25000,  usd: 18, stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: null },
+  'mobility-monthly': { ngn: 80000,  usd: 59, stripe: null, paystack: null },
+  'mobility-ageless': { ngn: 110000, usd: 79, stripe: null, paystack: null },
 };
 
 /* saved choice wins; otherwise Nigeria defaults to NGN, everyone else USD */
@@ -1244,28 +1251,53 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <button class="overlay-close" onclick="closeOverlay('mobility')">✕</button>
     <p class="overlay-eyebrow">Service 04</p>
     <h3 class="overlay-title">Mobility Work</h3>
-    <p class="overlay-sub">A single 20-minute virtual session with Ayo — pay per session, book as many as you need. Pay by card in USD and finalize your date and time on WhatsApp, or message Ayo directly for NGN. Must be reserved at least 48 hours in advance.</p>
-    <p class="overlay-includes">What happens in your session</p>
-    <ul class="overlay-list">
-      <li>20-minute virtual 1-on-1 with Ayo</li>
-      <li>Focused on your current mobility priorities</li>
-      <li>Movement assessment &amp; real-time corrections</li>
-      <li>Actionable takeaways you can apply immediately</li>
-      <li>Session notes sent to you after the call</li>
-      <li>Book again whenever you need it</li>
-    </ul>
+    <p class="overlay-sub">Restore range, ease stiffness, move without pain. Every session is a live 1-on-1 video call with Ayo &mdash; real-time assessment, corrections, and session notes sent after each call. Choose the tier that fits where you are. Sessions are reserved at least 48 hours ahead.</p>
     <div class="currency-tabs" id="mob-currency-tabs">
       <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
       <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
-    <div class="overlay-price-box">
-      <div class="overlay-price-label">Session fee</div>
-      <div class="overlay-price-value">
-        <span data-price="mobility">&#8358;25,000</span><span class="overlay-price-terms"> / session</span>
+    <div class="pricing-tier">
+      <span class="pricing-tier-name">Open Session</span>
+      <span class="pricing-tier-desc">Single 20-min session &middot; open to everyone</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="mobility">&#8358;25,000</span>
+        <span class="pricing-tier-period">/ session</span>
       </div>
+      <ul class="pricing-tier-points">
+        <li>Focused on your current mobility priorities</li>
+        <li>Book one whenever you need it &mdash; no commitment</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility')">Book Session &rarr;</button>
+    </div>
+    <div class="pricing-tier">
+      <span class="pricing-tier-name">Mobility Monthly</span>
+      <span class="pricing-tier-desc">4 sessions per month &middot; keep the progress</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="mobility-monthly">&#8358;80,000</span>
+        <span class="pricing-tier-period">/ month</span>
+      </div>
+      <ul class="pricing-tier-points">
+        <li>A session every week, progression tracked month to month</li>
+        <li>Priority scheduling &amp; a routine to follow between calls</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-monthly')">Subscribe &rarr;</button>
+    </div>
+    <div class="pricing-tier featured">
+      <span class="pricing-tier-badge">Signature &mdash; Women 40+</span>
+      <span class="pricing-tier-name">Ageless</span>
+      <span class="pricing-tier-desc">4-week guided programme for women 40+</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="mobility-ageless">&#8358;110,000</span>
+        <span class="pricing-tier-period">/ 4 weeks</span>
+      </div>
+      <ul class="pricing-tier-points">
+        <li>Built for changing joints &amp; hormones &mdash; gentle, bone-safe progressions</li>
+        <li>Weekly 1-on-1 with Ayo plus a 10-minute daily routine</li>
+        <li>Direct WhatsApp support for the full four weeks</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-ageless')">Start the Programme &rarr;</button>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="pay('mobility')"><span>Book Session</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
     </div>
     <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>

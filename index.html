@@ -299,6 +299,12 @@ nav{transition:background .4s,border-color .4s}
 .service-item:hover::after{opacity:1;transform:translateX(0)}
 
 .service-num{font-size:.58rem;letter-spacing:.35em;color:var(--mist);opacity:.45}
+.service-price{
+  display:block;margin-top:.6rem;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;letter-spacing:.02em;text-transform:none;
+  color:rgba(200,184,154,.75);
+}
 .service-name{
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(2rem,4vw,3.4rem);font-weight:300;letter-spacing:-.01em;
@@ -454,6 +460,17 @@ nav{transition:background .4s,border-color .4s}
 .cta-link:hover::after{background:var(--cream)}
 .cta-link:hover .arr{transform:translateX(6px)}
 
+/* ── FAQ ── */
+.faq{background:var(--deep)}
+.faq-list{max-width:720px;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:2rem;padding:1.6rem 0;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--white);transition:color .3s}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';font-size:1.15rem;color:var(--cream);opacity:.6;transition:transform .3s;flex-shrink:0}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item summary:hover{color:var(--cream)}
+.faq-item p{font-size:.78rem;line-height:2;color:rgba(240,237,232,.42);padding:0 0 1.6rem;max-width:56ch}
+
 /* ── NEWSLETTER ── */
 .newsletter{background:var(--black);text-align:center;padding:7rem 5rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .newsletter-inner{max-width:640px;margin:0 auto}
@@ -558,9 +575,12 @@ footer{
   .about-grid{gap:2.5rem;}
 }
 /* phones only — hide nav CTA, accessible via hero & CTA section */
+/* phones — keep the CTA, compact everything */
 @media(max-width:640px){
-  .nav-cta{display:none;}
-  .nav-links{gap:1.8rem;}
+  nav{padding:1.2rem 1.25rem}
+  .nav-links{gap:1rem;}
+  .nav-link-ul{font-size:.5rem;letter-spacing:.1em;}
+  .nav-cta{font-size:.5rem;padding:.45rem .7rem;letter-spacing:.1em;white-space:nowrap;}
 }
 @media(prefers-reduced-motion:reduce){
   .ticker-track{animation:none}
@@ -589,6 +609,10 @@ footer{
 .overlay-price-value{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);letter-spacing:-.01em}
 .overlay-price-terms{font-size:.6rem;color:rgba(240,237,232,.28);margin-left:.25rem;letter-spacing:.06em}
 .overlay-actions{display:flex;gap:.875rem;flex-wrap:wrap}
+.pay-secure{display:flex;align-items:center;gap:.55rem;margin-top:1.4rem;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,237,232,.3)}
+.pay-secure svg{flex-shrink:0;opacity:.6}
+.overlay-crosslink{display:block;background:none;border:none;cursor:pointer;margin:-.75rem 0 1.75rem;padding:0;text-align:left;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(200,184,154,.75);transition:color .3s}
+.overlay-crosslink:hover{color:var(--cream)}
 /* service button */
 .service-item-btn{display:grid;grid-template-columns:5ch 1fr auto;align-items:center;gap:5rem;padding:3.8rem 0;border:none;border-bottom:1px solid var(--line);background:none;width:100%;text-align:left;position:relative;overflow:hidden;color:inherit;cursor:pointer;transition:padding-left .5s cubic-bezier(.77,0,.18,1)}
 .service-item-btn::before{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(to right,var(--cream),transparent);transition:width .6s cubic-bezier(.77,0,.18,1)}
@@ -632,6 +656,18 @@ footer{
 .ebook-buy:hover{background:var(--cream);color:var(--black);border-color:var(--cream)}
 @media(max-width:900px){.ebook-card{flex-direction:column;align-items:flex-start}.ebook-card-right{text-align:left}}
 
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float{
+  position:fixed;right:1.5rem;bottom:1.5rem;z-index:400;
+  width:3.25rem;height:3.25rem;border-radius:50%;
+  background:var(--mid);border:1px solid rgba(201,168,76,.45);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(0,0,0,.45);
+  transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .3s;
+}
+.wa-float:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.85)}
+@media(max-width:640px){.wa-float{right:1rem;bottom:1rem;width:3rem;height:3rem}}
 
 /* ── GRAIN TEXTURE ── */
 body::before{
@@ -700,7 +736,7 @@ body::before{
     </h1>
     <p class="hero-descriptor">Online coaching, nutrition, and movement &mdash; built for people who take themselves seriously.</p>
     <div class="hero-btns">
-      <a href="#" onclick="openConsult();return false;" class="mag-btn primary" data-mag><span>Consult Ayo</span></a>
+      <a href="#" onclick="openConsult();return false;" class="mag-btn primary" data-mag><span>Consult Ayo &mdash; <span data-price="consult">&#8358;10,000</span></span></a>
       <a href="#services" class="mag-btn ghost" data-mag><span>See services</span></a>
     </div>
   </div>
@@ -757,28 +793,28 @@ body::before{
       <button class="service-item-btn" onclick="openService('coaching')">
         <span class="service-num">01</span>
         <span class="service-name">1-on-1 Coaching</span>
-        <span class="service-desc">Live virtual<br>accountability sessions</span>
+        <span class="service-desc">Live virtual<br>accountability sessions<span class="service-price">from <span data-price="coaching-x10">&#8358;130,000</span> / month</span></span>
       </button>
     </li>
     <li class="reveal" style="transition-delay:.15s">
       <button class="service-item-btn" onclick="openService('training')">
         <span class="service-num">02</span>
         <span class="service-name">Workout Routines</span>
-        <span class="service-desc">Ebook programmes<br>for every goal</span>
+        <span class="service-desc">Ebook programmes<br>for every goal<span class="service-price">from <span data-price="ebook-general">&#8358;20,000</span></span></span>
       </button>
     </li>
     <li class="reveal" style="transition-delay:.25s">
       <button class="service-item-btn" onclick="openService('nutrition')">
         <span class="service-num">03</span>
         <span class="service-name">Nutrition Planning</span>
-        <span class="service-desc">Diet protocols<br>built around your life</span>
+        <span class="service-desc">Diet protocols<br>built around your life<span class="service-price"><span data-price="nutrition-bulk">&#8358;25,000</span> per plan</span></span>
       </button>
     </li>
     <li class="reveal" style="transition-delay:.35s">
       <button class="service-item-btn" onclick="openService('mobility')">
         <span class="service-num">04</span>
         <span class="service-name">Mobility Work</span>
-        <span class="service-desc">Flexibility, recovery<br>and joint longevity</span>
+        <span class="service-desc">Flexibility, recovery<br>and joint longevity<span class="service-price"><span data-price="mobility">&#8358;25,000</span> / session</span></span>
       </button>
     </li>
   </ul>
@@ -861,6 +897,37 @@ body::before{
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="section faq reveal" id="faq">
+  <p class="section-label">Questions</p>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>How do I receive my ebook after payment?</summary>
+      <p>Card payments check out through Stripe and your download opens immediately after payment, with a receipt sent to your email. Paying in Naira? You&rsquo;ll be connected with Ayo on WhatsApp and receive your ebook there once payment is confirmed.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Where do coaching and consultation sessions happen?</summary>
+      <p>All sessions are live 1-on-1 video calls. Right after booking you&rsquo;ll finalise your date and time directly with Ayo.</p>
+    </details>
+    <details class="faq-item">
+      <summary>I&rsquo;m not in Nigeria &mdash; can I still work with Ayo?</summary>
+      <p>Yes. Ayo is based in Lagos (WAT) and works with clients worldwide &mdash; sessions are scheduled around your timezone.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What payment methods do you accept?</summary>
+      <p>Card payments in USD via Stripe, and Naira payments via Paystack. Every checkout is handled by those providers &mdash; your card details never touch this site.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What happens after I subscribe to coaching?</summary>
+      <p>You&rsquo;re redirected to finalise scheduling with Ayo right after checkout, and your programme is built from there &mdash; sessions typically begin the same week.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I change or cancel a session?</summary>
+      <p>Message Ayo on WhatsApp &mdash; every request is handled personally and quickly. Mobility sessions must be reserved at least 48 hours ahead.</p>
+    </details>
+  </div>
+</section>
+
 <!-- NEWSLETTER -->
 <section class="newsletter reveal">
   <div class="newsletter-inner">
@@ -895,6 +962,9 @@ body::before{
   </div>
   <span class="footer-copy">&copy; 2026 &mdash; All rights reserved</span>
 </footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/message/BFJYP7KFU3A4O1" target="_blank" rel="noopener" class="wa-float" aria-label="Chat with Ayo on WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C9A84C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
 <script>
 /* ── CURSOR ── */
@@ -942,43 +1012,56 @@ document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observ
 
 /* ── OVERLAYS ── */
 function openOverlay(id){document.getElementById('overlay-'+id).classList.add('is-open');document.body.style.overflow='hidden';}
-function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';}
+function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';if(location.hash==='#'+id)history.replaceState(null,'',location.pathname+location.search);}
 function openService(id){openOverlay(id);}
 function openConsult(){openOverlay('consult');}
 function chainToConsult(id){closeOverlay(id);setTimeout(openConsult,220);}
 
-/* ── CONSULTATION PAYMENT ── */
-let _consultCurrency = 'NGN';
-const CONSULT_LINKS = {
-  NGN: 'https://paystack.com/buy/consult-ayo-vspgeg',
-  USD: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00',
+/* ── PAYMENTS & CURRENCY ──
+   One entry per product. `paystack` slots are filled as links are created;
+   until then NGN checkout falls back to WhatsApp. */
+const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
+const PAY_LINKS = {
+  'consult':        { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.com/buy/consult-ayo-vspgeg' },
+  'coaching-x10':   { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/28EaEX9k64KKgHe5GD4ZG04', paystack: null },
+  'coaching-x20':   { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/bJe8wP7bY3GG0Igd954ZG05', paystack: null },
+  'ebook-muscle':   { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01', paystack: null },
+  'ebook-strength': { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02', paystack: null },
+  'ebook-general':  { ngn: 20000,  usd: 14,  stripe: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03', paystack: null },
+  'nutrition-bulk': { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06', paystack: null },
+  'nutrition-cut':  { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07', paystack: null },
+  'mobility':       { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: null },
 };
-function setConsultCurrency(code, btn){
-  _consultCurrency = code;
-  document.querySelectorAll('#consult-currency-tabs .currency-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('consult-price').textContent = code === 'NGN' ? '₦10,000' : '$8';
+
+/* saved choice wins; otherwise Nigeria defaults to NGN, everyone else USD */
+let _currency = (function(){
+  try{ const s = localStorage.getItem('abs-currency'); if(s === 'NGN' || s === 'USD') return s; }catch(e){}
+  try{
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    if(tz === 'Africa/Lagos' || /-NG\b/i.test(navigator.language || '')) return 'NGN';
+  }catch(e){}
+  return 'USD';
+})();
+
+function renderPrices(){
+  document.querySelectorAll('[data-price]').forEach(el => {
+    const p = PAY_LINKS[el.dataset.price];
+    if(p) el.textContent = _currency === 'NGN' ? '₦' + p.ngn.toLocaleString() : '$' + p.usd.toLocaleString();
+  });
+  document.querySelectorAll('.currency-tab').forEach(t => t.classList.toggle('active', t.dataset.cur === _currency));
 }
-function payConsult(){
-  const link = CONSULT_LINKS[_consultCurrency];
-  if(link){
-    window.location.href = link;
-  }else{
-    alert('Naira payments launch shortly — switch to USD to pay now, or message Ayo on WhatsApp.');
-  }
+function setSiteCurrency(code){
+  _currency = code;
+  try{ localStorage.setItem('abs-currency', code); }catch(e){}
+  renderPrices();
+}
+function pay(key){
+  const p = PAY_LINKS[key];
+  if(_currency === 'USD' && p && p.stripe){ window.location.href = p.stripe; }
+  else if(_currency === 'NGN' && p && p.paystack){ window.location.href = p.paystack; }
+  else{ window.open(WHATSAPP, '_blank'); }
 }
 
-/* ── STRIPE PRODUCT LINKS (USD, card checkout) — NGN still routes to WhatsApp ── */
-const STRIPE_PRODUCTS = {
-  'coaching-x10':   { usd: 94,  link: 'https://buy.stripe.com/28EaEX9k64KKgHe5GD4ZG04' },
-  'coaching-x20':   { usd: 181, link: 'https://buy.stripe.com/bJe8wP7bY3GG0Igd954ZG05' },
-  'ebook-muscle':   { usd: 22,  link: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01' },
-  'ebook-strength': { usd: 22,  link: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02' },
-  'ebook-general':  { usd: 14,  link: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03' },
-  'nutrition-bulk': { usd: 18,  link: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06' },
-  'nutrition-cut':  { usd: 18,  link: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07' },
-  'mobility':       { usd: 18,  link: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08' },
-};
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
 });
@@ -988,100 +1071,14 @@ document.addEventListener('keydown',e=>{
   document.body.style.overflow='';
 });
 
-/* ── CURRENCY CONVERTER ── */
-let _rates = { NGN: 1, USD: 0.00063 }; // fallback rate
-fetch('https://open.er-api.com/v6/latest/NGN')
-  .then(r => r.json())
-  .then(d => { if(d.rates){ _rates.USD = d.rates.USD; } })
-  .catch(() => {});
-
-let _coachingCurrency = 'NGN';
-function setCurrency(code, btn) {
-  _coachingCurrency = code;
-  document.querySelectorAll('#overlay-coaching .currency-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$' };
-  const sym = syms[code];
-  const rate = _rates[code];
-  document.querySelectorAll('#overlay-coaching .price-amount').forEach(el => {
-    const ngn = parseInt(el.dataset.ngn);
-    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
-    if (code === 'NGN') {
-      el.textContent = '₦' + ngn.toLocaleString();
-    } else if (code === 'USD' && fixed) {
-      el.textContent = '$' + fixed.usd.toLocaleString();
-    } else {
-      const converted = Math.round(ngn * rate);
-      el.textContent = sym + converted.toLocaleString();
-    }
-  });
+/* ── DEEP LINKS — #coaching #training #nutrition #mobility #consult open their overlay ── */
+const OVERLAY_IDS = ['coaching','training','nutrition','mobility','consult'];
+function openFromHash(){
+  const h = location.hash.replace('#','');
+  if(OVERLAY_IDS.includes(h)) openOverlay(h);
 }
-function buyCoaching(key){
-  const product = STRIPE_PRODUCTS[key];
-  if(_coachingCurrency === 'USD' && product){
-    window.location.href = product.link;
-  }else{
-    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
-  }
-}
-
-let _nutritionCurrency = 'NGN';
-function setNutritionCurrency(code, btn) {
-  _nutritionCurrency = code;
-  document.querySelectorAll('#nutrition-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$' };
-  const sym = syms[code];
-  const rate = _rates[code];
-  document.querySelectorAll('.nutrition-price').forEach(el => {
-    const ngn = parseInt(el.dataset.ngn);
-    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
-    if (code === 'NGN') {
-      el.textContent = '₦' + ngn.toLocaleString();
-    } else if (code === 'USD' && fixed) {
-      el.textContent = '$' + fixed.usd.toLocaleString();
-    } else {
-      el.textContent = sym + Math.round(ngn * rate).toLocaleString();
-    }
-  });
-}
-function buyNutrition(key){
-  const product = STRIPE_PRODUCTS[key];
-  if(_nutritionCurrency === 'USD' && product){
-    window.location.href = product.link;
-  }else{
-    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
-  }
-}
-
-let _mobilityCurrency = 'NGN';
-function setMobilityCurrency(code, btn) {
-  _mobilityCurrency = code;
-  document.querySelectorAll('#mob-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$' };
-  const sym = syms[code];
-  const rate = _rates[code];
-  document.querySelectorAll('.mobility-price').forEach(el => {
-    const ngn = parseInt(el.dataset.ngn);
-    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
-    if (code === 'NGN') {
-      el.textContent = '₦' + ngn.toLocaleString();
-    } else if (code === 'USD' && fixed) {
-      el.textContent = '$' + fixed.usd.toLocaleString();
-    } else {
-      el.textContent = sym + Math.round(ngn * rate).toLocaleString();
-    }
-  });
-}
-function buyMobility(){
-  const product = STRIPE_PRODUCTS['mobility'];
-  if(_mobilityCurrency === 'USD' && product){
-    window.location.href = product.link;
-  }else{
-    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
-  }
-}
+window.addEventListener('hashchange', openFromHash);
+document.addEventListener('DOMContentLoaded', function(){ renderPrices(); openFromHash(); });
 
 /* ── NEWSLETTER ── */
 async function submitNewsletter(e){
@@ -1097,36 +1094,6 @@ async function submitNewsletter(e){
       document.getElementById('newsletter-success').style.display='block';
     }else{btn.disabled=false;btn.textContent='Join the list';alert('Something went wrong — please try again.');}
   }catch{btn.disabled=false;btn.textContent='Join the list';alert('Could not send — check your connection and try again.');}
-}
-
-let _trainingCurrency = 'NGN';
-function setEbookCurrency(code, btn) {
-  _trainingCurrency = code;
-  document.querySelectorAll('#ebook-currency-tabs .currency-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const syms = { NGN: '₦', USD: '$' };
-  const sym = syms[code];
-  const rate = _rates[code];
-  document.querySelectorAll('#overlay-training .ebook-price').forEach(el => {
-    const ngn = parseInt(el.dataset.ngn);
-    const fixed = STRIPE_PRODUCTS[el.dataset.usdKey];
-    if (code === 'NGN') {
-      el.textContent = '₦' + ngn.toLocaleString();
-    } else if (code === 'USD' && fixed) {
-      el.textContent = '$' + fixed.usd.toLocaleString();
-    } else {
-      el.textContent = sym + Math.round(ngn * rate).toLocaleString();
-    }
-  });
-}
-
-function buyEbook(key) {
-  const product = STRIPE_PRODUCTS[key];
-  if(_trainingCurrency === 'USD' && product){
-    window.location.href = product.link;
-  }else{
-    window.open('https://wa.me/message/BFJYP7KFU3A4O1', '_blank');
-  }
 }
 
 /* Update cursor for new interactive elements */
@@ -1152,32 +1119,33 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       <li>Goal mapping &amp; milestone check-ins</li>
     </ul>
     <div class="currency-tabs">
-      <button class="currency-tab active" onclick="setCurrency('NGN',this)">&#8358; NGN</button>
-      <button class="currency-tab" onclick="setCurrency('USD',this)">$ USD</button>
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Virtual Coaching &times;10</span>
       <span class="pricing-tier-desc">10 sessions per month</span>
       <div class="pricing-tier-price">
-        <span class="price-amount" data-ngn="130000" data-usd-key="coaching-x10">&#8358;130,000</span>
+        <span class="price-amount" data-price="coaching-x10">&#8358;130,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
-      <button class="ebook-buy pricing-tier-buy" onclick="buyCoaching('coaching-x10')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Virtual Coaching &times;20</span>
       <span class="pricing-tier-desc">20 sessions per month</span>
       <div class="pricing-tier-price">
-        <span class="price-amount" data-ngn="250000" data-usd-key="coaching-x20">&#8358;250,000</span>
+        <span class="price-amount" data-price="coaching-x20">&#8358;250,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
-      <button class="ebook-buy pricing-tier-buy" onclick="buyCoaching('coaching-x20')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('coaching-x20')">Subscribe &rarr;</button>
     </div>
     <p class="pricing-note">NGN: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="chainToConsult('coaching')"><span>Consult Ayo</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('coaching')"><span>&larr; Back</span></button>
     </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
   </div>
 </div>
 
@@ -1188,8 +1156,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <h3 class="overlay-title">Workout Routines</h3>
     <p class="overlay-sub">4-week structured ebook programmes designed for real results. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
     <div class="currency-tabs" id="ebook-currency-tabs">
-      <button class="currency-tab active" onclick="setEbookCurrency('NGN',this)">&#8358; NGN</button>
-      <button class="currency-tab" onclick="setEbookCurrency('USD',this)">$ USD</button>
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
     <div class="ebook-grid">
       <div class="ebook-card">
@@ -1198,8 +1166,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
           <span class="ebook-card-desc">4-week muscle building programme &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="30000" data-usd-key="ebook-muscle">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="buyEbook('ebook-muscle')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-price="ebook-muscle">&#8358;30,000</span>
+          <button class="ebook-buy" onclick="pay('ebook-muscle')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1208,8 +1176,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
           <span class="ebook-card-desc">4-week strength training programme &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="30000" data-usd-key="ebook-strength">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="buyEbook('ebook-strength')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-price="ebook-strength">&#8358;30,000</span>
+          <button class="ebook-buy" onclick="pay('ebook-strength')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1218,14 +1186,16 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
           <span class="ebook-card-desc">4-week general fitness plan &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price" data-ngn="20000" data-usd-key="ebook-general">&#8358;20,000</span>
-          <button class="ebook-buy" onclick="buyEbook('ebook-general')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-price="ebook-general">&#8358;20,000</span>
+          <button class="ebook-buy" onclick="pay('ebook-general')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
+    <button class="overlay-crosslink" onclick="chainToConsult('training')">Prefer a plan built just for you? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
     <div class="overlay-actions">
       <button class="mag-btn ghost" onclick="closeOverlay('training')"><span>&larr; Back</span></button>
     </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
   </div>
 </div>
 
@@ -1236,8 +1206,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <h3 class="overlay-title">Nutrition Planning</h3>
     <p class="overlay-sub">Structured nutrition ebooks built around your goal. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
     <div class="currency-tabs" id="nutrition-currency-tabs">
-      <button class="currency-tab active" onclick="setNutritionCurrency('NGN',this)">&#8358; NGN</button>
-      <button class="currency-tab" onclick="setNutritionCurrency('USD',this)">$ USD</button>
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
     <div class="ebook-grid">
       <div class="ebook-card">
@@ -1246,8 +1216,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
           <span class="ebook-card-desc">Structured nutrition plan for muscle gain &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price nutrition-price" data-ngn="25000" data-usd-key="nutrition-bulk">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyNutrition('nutrition-bulk')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-price="nutrition-bulk">&#8358;25,000</span>
+          <button class="ebook-buy" onclick="pay('nutrition-bulk')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1256,14 +1226,16 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
           <span class="ebook-card-desc">Structured nutrition plan for fat loss &middot; Ebook</span>
         </div>
         <div class="ebook-card-right">
-          <span class="ebook-price nutrition-price" data-ngn="25000" data-usd-key="nutrition-cut">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="buyNutrition('nutrition-cut')">Get Ebook &rarr;</button>
+          <span class="ebook-price" data-price="nutrition-cut">&#8358;25,000</span>
+          <button class="ebook-buy" onclick="pay('nutrition-cut')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
+    <button class="overlay-crosslink" onclick="chainToConsult('nutrition')">Not sure which plan fits? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
     <div class="overlay-actions">
       <button class="mag-btn ghost" onclick="closeOverlay('nutrition')"><span>&larr; Back</span></button>
     </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
   </div>
 </div>
 
@@ -1283,19 +1255,20 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       <li>Book again whenever you need it</li>
     </ul>
     <div class="currency-tabs" id="mob-currency-tabs">
-      <button class="currency-tab active" onclick="setMobilityCurrency('NGN',this)">&#8358; NGN</button>
-      <button class="currency-tab" onclick="setMobilityCurrency('USD',this)">$ USD</button>
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
     <div class="overlay-price-box">
       <div class="overlay-price-label">Session fee</div>
       <div class="overlay-price-value">
-        <span class="mobility-price" data-ngn="25000" data-usd-key="mobility">&#8358;25,000</span><span class="overlay-price-terms"> / session</span>
+        <span data-price="mobility">&#8358;25,000</span><span class="overlay-price-terms"> / session</span>
       </div>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="buyMobility()"><span>Book Session</span></button>
+      <button class="mag-btn primary" onclick="pay('mobility')"><span>Book Session</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
     </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
   </div>
 </div>
 
@@ -1313,19 +1286,20 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       <li>Direct path into coaching, nutrition, or mobility programmes</li>
     </ul>
     <div class="currency-tabs" id="consult-currency-tabs">
-      <button class="currency-tab active" onclick="setConsultCurrency('NGN',this)">&#8358; NGN</button>
-      <button class="currency-tab" onclick="setConsultCurrency('USD',this)">$ USD</button>
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
     </div>
     <div class="overlay-price-box">
       <div class="overlay-price-label">Consultation fee</div>
       <div class="overlay-price-value">
-        <span id="consult-price">&#8358;10,000</span>
+        <span id="consult-price" data-price="consult">&#8358;10,000</span>
       </div>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="payConsult()"><span>Consult</span></button>
+      <button class="mag-btn primary" onclick="pay('consult')"><span>Consult</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('consult')"><span>&larr; Back</span></button>
     </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
   </div>
 </div>
 

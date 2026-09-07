@@ -795,29 +795,36 @@ body::before{
   <h2 class="services-heading">Services</h2>
   <ul class="services-list">
     <li class="reveal" style="transition-delay:.05s">
-      <button class="service-item-btn" onclick="openService('coaching')">
+      <button class="service-item-btn" onclick="openService('programs')">
         <span class="service-num">01</span>
+        <span class="service-name">Programs</span>
+        <span class="service-desc">Complete training &amp;<br>nutrition systems<span class="service-price">from <span data-price="program-recomp">&#8358;75,000</span></span></span>
+      </button>
+    </li>
+    <li class="reveal" style="transition-delay:.15s">
+      <button class="service-item-btn" onclick="openService('coaching')">
+        <span class="service-num">02</span>
         <span class="service-name">1-on-1 Coaching</span>
         <span class="service-desc">Live virtual<br>accountability sessions<span class="service-price">from <span data-price="coaching-x10">&#8358;130,000</span> / month</span></span>
       </button>
     </li>
-    <li class="reveal" style="transition-delay:.15s">
+    <li class="reveal" style="transition-delay:.25s">
       <button class="service-item-btn" onclick="openService('training')">
-        <span class="service-num">02</span>
-        <span class="service-name">Workout Routines</span>
-        <span class="service-desc">Ebook programmes<br>for every goal<span class="service-price">from <span data-price="ebook-general">&#8358;20,000</span></span></span>
+        <span class="service-num">03</span>
+        <span class="service-name">Starter Routines</span>
+        <span class="service-desc">4-week ebooks<br>to get you moving<span class="service-price">from <span data-price="ebook-general">&#8358;20,000</span></span></span>
       </button>
     </li>
-    <li class="reveal" style="transition-delay:.25s">
+    <li class="reveal" style="transition-delay:.35s">
       <button class="service-item-btn" onclick="openService('nutrition')">
-        <span class="service-num">03</span>
+        <span class="service-num">04</span>
         <span class="service-name">Nutrition Planning</span>
         <span class="service-desc">Diet protocols<br>built around your life<span class="service-price"><span data-price="nutrition-bulk">&#8358;25,000</span> per plan</span></span>
       </button>
     </li>
-    <li class="reveal" style="transition-delay:.35s">
+    <li class="reveal" style="transition-delay:.45s">
       <button class="service-item-btn" onclick="openService('mobility')">
-        <span class="service-num">04</span>
+        <span class="service-num">05</span>
         <span class="service-name">Mobility Work</span>
         <span class="service-desc">Flexibility, recovery<br>and joint longevity<span class="service-price">from <span data-price="mobility">&#8358;25,000</span> / session</span></span>
       </button>
@@ -1020,7 +1027,8 @@ function openOverlay(id){document.getElementById('overlay-'+id).classList.add('i
 function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';if(location.hash==='#'+id)history.replaceState(null,'',location.pathname+location.search);}
 function openService(id){openOverlay(id);}
 function openConsult(){openOverlay('consult');}
-function chainToConsult(id){closeOverlay(id);setTimeout(openConsult,220);}
+function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOverlay(to);},220);}
+function chainToConsult(id){chainOverlay(id,'consult');}
 
 /* ── PAYMENTS & CURRENCY ──
    One entry per product. `paystack` slots are filled as links are created;
@@ -1038,6 +1046,9 @@ const PAY_LINKS = {
   'mobility':         { ngn: 25000,  usd: 18, stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: 'https://paystack.shop/pay/dtbe7h14c8' },
   'mobility-monthly': { ngn: 80000,  usd: 59, stripe: 'https://buy.stripe.com/9B6aEX1REelk76E5GD4ZG0b', paystack: null },
   'mobility-ageless': { ngn: 110000, usd: 79, stripe: 'https://buy.stripe.com/6oU8wPeEqgtsaiQ0mj4ZG0c', paystack: null },
+  'program-recomp':   { ngn: 75000,  usd: 54, stripe: null, paystack: null },
+  'program-building': { ngn: 95000,  usd: 69, stripe: null, paystack: null },
+  'program-ageless':  { ngn: 85000,  usd: 62, stripe: null, paystack: null },
 };
 
 /* saved choice wins; otherwise Nigeria defaults to NGN, everyone else USD */
@@ -1079,7 +1090,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ── DEEP LINKS — #coaching #training #nutrition #mobility #consult open their overlay ── */
-const OVERLAY_IDS = ['coaching','training','nutrition','mobility','consult'];
+const OVERLAY_IDS = ['programs','coaching','training','nutrition','mobility','consult'];
 function openFromHash(){
   const h = location.hash.replace('#','');
   if(OVERLAY_IDS.includes(h)) openOverlay(h);
@@ -1111,10 +1122,75 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
 </script>
 
 <!-- SERVICE OVERLAYS -->
+<div class="overlay-backdrop" id="overlay-programs" role="dialog" aria-modal="true">
+  <div class="overlay-panel">
+    <button class="overlay-close" onclick="closeOverlay('programs')">✕</button>
+    <p class="overlay-eyebrow">Service 01</p>
+    <h3 class="overlay-title">Programs</h3>
+    <p class="overlay-sub">Complete systems &mdash; training and nutrition together, built to run without live coaching. Pick the goal that matches yours, get instant access, and start this week.</p>
+    <div class="currency-tabs" id="programs-currency-tabs">
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
+    </div>
+    <div class="pricing-tier featured">
+      <span class="pricing-tier-badge">Most Popular</span>
+      <span class="pricing-tier-name">Recomposition</span>
+      <span class="pricing-tier-desc">8 weeks &middot; lose fat and build muscle at once</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="program-recomp">&#8358;75,000</span>
+        <span class="pricing-tier-period">/ 8 weeks</span>
+      </div>
+      <ul class="pricing-tier-points">
+        <li>4 training days a week, with progression built into every block</li>
+        <li>Calorie &amp; macro targets that shift as your body changes</li>
+        <li>Weekly check-in point with Ayo on WhatsApp</li>
+        <li>Gym-based, with a full home-equipment alternative included</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
+    </div>
+    <div class="pricing-tier">
+      <span class="pricing-tier-name">Bodybuilding</span>
+      <span class="pricing-tier-desc">12 weeks &middot; physique and hypertrophy focus</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="program-building">&#8358;95,000</span>
+        <span class="pricing-tier-period">/ 12 weeks</span>
+      </div>
+      <ul class="pricing-tier-points">
+        <li>5 training days a week &mdash; push, pull, legs, plus weak-point work</li>
+        <li>Volume and intensity progressed across three training blocks</li>
+        <li>Bulking nutrition framework with an adjustment protocol</li>
+        <li>Built for intermediate lifters with full gym access</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-building')">Start Bodybuilding &rarr;</button>
+    </div>
+    <div class="pricing-tier">
+      <span class="pricing-tier-badge">Ageless &mdash; 40+</span>
+      <span class="pricing-tier-name">Ageless Strength</span>
+      <span class="pricing-tier-desc">8 weeks &middot; strength and muscle after 40</span>
+      <div class="pricing-tier-price">
+        <span class="price-amount" data-price="program-ageless">&#8358;85,000</span>
+        <span class="pricing-tier-period">/ 8 weeks</span>
+      </div>
+      <ul class="pricing-tier-points">
+        <li>3 training days a week &mdash; joint-safe loading, no ego lifts</li>
+        <li>Programmed around recovery: what your body needs at 40+, not at 20</li>
+        <li>Protein-forward nutrition to protect muscle and bone</li>
+        <li>Pairs with Ageless Mobility for the complete 40+ system</li>
+      </ul>
+      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-ageless')">Start Ageless Strength &rarr;</button>
+    </div>
+    <button class="overlay-crosslink" onclick="chainToConsult('programs')">Not sure which fits you? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
+    <div class="overlay-actions">
+      <button class="mag-btn ghost" onclick="closeOverlay('programs')"><span>&larr; Back</span></button>
+    </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>
+  </div>
+</div>
+
 <div class="overlay-backdrop" id="overlay-coaching" role="dialog" aria-modal="true">
   <div class="overlay-panel">
     <button class="overlay-close" onclick="closeOverlay('coaching')">✕</button>
-    <p class="overlay-eyebrow">Service 01</p>
+    <p class="overlay-eyebrow">Service 02</p>
     <h3 class="overlay-title">1-on-1 Coaching</h3>
     <p class="overlay-sub">A fully personalised coaching relationship. I work with a small number of clients at any time to ensure every person gets the attention they deserve.</p>
     <p class="overlay-includes">What's included</p>
@@ -1159,9 +1235,9 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
 <div class="overlay-backdrop" id="overlay-training" role="dialog" aria-modal="true">
   <div class="overlay-panel">
     <button class="overlay-close" onclick="closeOverlay('training')">✕</button>
-    <p class="overlay-eyebrow">Service 02</p>
-    <h3 class="overlay-title">Workout Routines</h3>
-    <p class="overlay-sub">4-week structured ebook programmes designed for real results. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
+    <p class="overlay-eyebrow">Service 03</p>
+    <h3 class="overlay-title">Starter Routines</h3>
+    <p class="overlay-sub">4-week ebooks to get you training properly &mdash; the simplest way in. Instant delivery on card payment. Want training and nutrition together in one system? Those are the full Programs.</p>
     <div class="currency-tabs" id="ebook-currency-tabs">
       <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
       <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
@@ -1198,7 +1274,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
       </div>
     </div>
-    <button class="overlay-crosslink" onclick="chainToConsult('training')">Prefer a plan built just for you? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
+    <button class="overlay-crosslink" onclick="chainOverlay('training','programs')">Ready for the full system &mdash; training + nutrition together? See Programs from <span data-price="program-recomp">&#8358;75,000</span> &rarr;</button>
     <div class="overlay-actions">
       <button class="mag-btn ghost" onclick="closeOverlay('training')"><span>&larr; Back</span></button>
     </div>
@@ -1209,7 +1285,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
 <div class="overlay-backdrop" id="overlay-nutrition" role="dialog" aria-modal="true">
   <div class="overlay-panel">
     <button class="overlay-close" onclick="closeOverlay('nutrition')">✕</button>
-    <p class="overlay-eyebrow">Service 03</p>
+    <p class="overlay-eyebrow">Service 04</p>
     <h3 class="overlay-title">Nutrition Planning</h3>
     <p class="overlay-sub">Structured nutrition ebooks built around your goal. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
     <div class="currency-tabs" id="nutrition-currency-tabs">
@@ -1238,7 +1314,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
       </div>
     </div>
-    <button class="overlay-crosslink" onclick="chainToConsult('nutrition')">Not sure which plan fits? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
+    <button class="overlay-crosslink" onclick="chainOverlay('nutrition','programs')">Want the training to match your nutrition? See Programs from <span data-price="program-recomp">&#8358;75,000</span> &rarr;</button>
     <div class="overlay-actions">
       <button class="mag-btn ghost" onclick="closeOverlay('nutrition')"><span>&larr; Back</span></button>
     </div>
@@ -1249,7 +1325,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
 <div class="overlay-backdrop" id="overlay-mobility" role="dialog" aria-modal="true">
   <div class="overlay-panel">
     <button class="overlay-close" onclick="closeOverlay('mobility')">✕</button>
-    <p class="overlay-eyebrow">Service 04</p>
+    <p class="overlay-eyebrow">Service 05</p>
     <h3 class="overlay-title">Mobility Work</h3>
     <p class="overlay-sub">Restore range, ease stiffness, move without pain. Every session is a live 1-on-1 video call with Ayo &mdash; real-time assessment, corrections, and session notes sent after each call. Choose the tier that fits where you are. Sessions are reserved at least 48 hours ahead.</p>
     <div class="currency-tabs" id="mob-currency-tabs">
@@ -1283,8 +1359,8 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-monthly')">Subscribe &rarr;</button>
     </div>
     <div class="pricing-tier featured">
-      <span class="pricing-tier-badge">Signature &mdash; 40+ Programme</span>
-      <span class="pricing-tier-name">Ageless</span>
+      <span class="pricing-tier-badge">Ageless &mdash; 40+</span>
+      <span class="pricing-tier-name">Ageless Mobility</span>
       <span class="pricing-tier-desc">4-week guided programme for bodies 40+</span>
       <div class="pricing-tier-price">
         <span class="price-amount" data-price="mobility-ageless">&#8358;110,000</span>
@@ -1294,6 +1370,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Built for changing joints &amp; hormones &mdash; gentle, low-impact progressions for men &amp; women</li>
         <li>Weekly 1-on-1 with Ayo plus a 10-minute daily routine</li>
         <li>Direct WhatsApp support for the full four weeks</li>
+        <li>Pairs with Ageless Strength for the complete 40+ system</li>
       </ul>
       <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-ageless')">Start the Programme &rarr;</button>
     </div>

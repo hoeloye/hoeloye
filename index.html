@@ -662,6 +662,8 @@ footer{
 .ebook-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--cream);display:block;margin-bottom:.5rem;transition:opacity .2s}
 .ebook-buy{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);background:none;border:1px solid rgba(200,184,154,.3);padding:.4rem .9rem;cursor:pointer;font-family:'Inter',sans-serif;transition:background .25s,color .25s,border-color .25s;white-space:nowrap}
 .ebook-buy:hover{background:var(--cream);color:var(--black);border-color:var(--cream)}
+.pay-manual{white-space:normal;letter-spacing:.13em;color:var(--mist);border-color:rgba(122,158,142,.3)}
+.pay-manual:hover{background:var(--mist);color:var(--black);border-color:var(--mist)}
 @media(max-width:900px){.ebook-card{flex-direction:column;align-items:flex-start}.ebook-card-right{text-align:left}}
 
 
@@ -1070,6 +1072,27 @@ function renderPrices(){
     if(p) el.textContent = _currency === 'NGN' ? '₦' + p.ngn.toLocaleString() : '$' + p.usd.toLocaleString();
   });
   document.querySelectorAll('.currency-tab').forEach(t => t.classList.toggle('active', t.dataset.cur === _currency));
+  updatePayButtons();
+}
+/* a product with no checkout in the active currency falls back to WhatsApp —
+   say so on the button so the click matches what actually happens */
+function updatePayButtons(){
+  document.querySelectorAll('[data-pay]').forEach(el => {
+    const p = PAY_LINKS[el.dataset.pay];
+    const only = el.children.length === 1 && el.firstElementChild.tagName === 'SPAN';
+    const label = only ? el.firstElementChild : el;
+    if(el.dataset.payLabel === undefined) el.dataset.payLabel = label.innerHTML;
+    if(p && (_currency === 'USD' ? p.stripe : p.paystack)){
+      label.innerHTML = el.dataset.payLabel;
+      el.classList.remove('pay-manual');
+      el.removeAttribute('aria-label');
+    }else{
+      const sym = _currency === 'NGN' ? '₦' : '$';
+      label.innerHTML = 'Pay in ' + sym + ' via WhatsApp &rarr;';
+      el.classList.add('pay-manual');
+      el.setAttribute('aria-label', 'Message Ayo on WhatsApp to pay in ' + (_currency === 'NGN' ? 'Naira' : 'US Dollars'));
+    }
+  });
 }
 function setSiteCurrency(code){
   _currency = code;
@@ -1149,7 +1172,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Weekly check-in point with Ayo on WhatsApp</li>
         <li>Gym-based, with a full home-equipment alternative included</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Bodybuilding</span>
@@ -1164,7 +1187,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Bulking nutrition framework with an adjustment protocol</li>
         <li>Built for intermediate lifters with full gym access</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-building')">Start Bodybuilding &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="program-building" onclick="pay('program-building')">Start Bodybuilding &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-badge">Ageless &mdash; 40+</span>
@@ -1180,7 +1203,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Protein-forward nutrition to protect muscle and bone</li>
         <li>Pairs with Ageless Mobility for the complete 40+ system</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('program-ageless')">Start Ageless Strength &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="program-ageless" onclick="pay('program-ageless')">Start Ageless Strength &rarr;</button>
     </div>
     <button class="overlay-crosslink" onclick="chainToConsult('programs')">Not sure which fits you? Book a 20-min consult &mdash; <span data-price="consult">&#8358;10,000</span> &rarr;</button>
     <div class="overlay-actions">
@@ -1215,7 +1238,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <span class="price-amount" data-price="coaching-x10">&#8358;130,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="coaching-x10" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Virtual Coaching &times;20</span>
@@ -1224,7 +1247,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <span class="price-amount" data-price="coaching-x20">&#8358;250,000</span>
         <span class="pricing-tier-period">/ month</span>
       </div>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('coaching-x20')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="coaching-x20" onclick="pay('coaching-x20')">Subscribe &rarr;</button>
     </div>
     <p class="pricing-note">NGN: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
     <div class="overlay-actions">
@@ -1253,7 +1276,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price" data-price="ebook-muscle">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="pay('ebook-muscle')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" data-pay="ebook-muscle" onclick="pay('ebook-muscle')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1263,7 +1286,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price" data-price="ebook-strength">&#8358;30,000</span>
-          <button class="ebook-buy" onclick="pay('ebook-strength')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" data-pay="ebook-strength" onclick="pay('ebook-strength')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1273,7 +1296,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price" data-price="ebook-general">&#8358;20,000</span>
-          <button class="ebook-buy" onclick="pay('ebook-general')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" data-pay="ebook-general" onclick="pay('ebook-general')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
@@ -1303,7 +1326,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price" data-price="nutrition-bulk">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="pay('nutrition-bulk')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" data-pay="nutrition-bulk" onclick="pay('nutrition-bulk')">Get Ebook &rarr;</button>
         </div>
       </div>
       <div class="ebook-card">
@@ -1313,7 +1336,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         </div>
         <div class="ebook-card-right">
           <span class="ebook-price" data-price="nutrition-cut">&#8358;25,000</span>
-          <button class="ebook-buy" onclick="pay('nutrition-cut')">Get Ebook &rarr;</button>
+          <button class="ebook-buy" data-pay="nutrition-cut" onclick="pay('nutrition-cut')">Get Ebook &rarr;</button>
         </div>
       </div>
     </div>
@@ -1346,7 +1369,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Focused on your current mobility priorities</li>
         <li>Book one whenever you need it &mdash; no commitment</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility')">Book Session &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="mobility" onclick="pay('mobility')">Book Session &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Mobility Monthly</span>
@@ -1359,7 +1382,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>A session every week, progression tracked month to month</li>
         <li>Priority scheduling &amp; a routine to follow between calls</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-monthly')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="mobility-monthly" onclick="pay('mobility-monthly')">Subscribe &rarr;</button>
     </div>
     <div class="pricing-tier featured">
       <span class="pricing-tier-badge">Ageless &mdash; 40+</span>
@@ -1375,7 +1398,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>Direct WhatsApp support for the full four weeks</li>
         <li>Pairs with Ageless Strength for the complete 40+ system</li>
       </ul>
-      <button class="ebook-buy pricing-tier-buy" onclick="pay('mobility-ageless')">Start the Programme &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="mobility-ageless" onclick="pay('mobility-ageless')">Start the Programme &rarr;</button>
     </div>
     <div class="overlay-actions">
       <button class="mag-btn ghost" onclick="closeOverlay('mobility')"><span>&larr; Back</span></button>
@@ -1408,7 +1431,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       </div>
     </div>
     <div class="overlay-actions">
-      <button class="mag-btn primary" onclick="pay('consult')"><span>Consult</span></button>
+      <button class="mag-btn primary" data-pay="consult" onclick="pay('consult')"><span>Consult</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('consult')"><span>&larr; Back</span></button>
     </div>
     <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout &mdash; Stripe &middot; Paystack</p>

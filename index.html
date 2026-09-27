@@ -1041,8 +1041,8 @@ function chainToConsult(id){chainOverlay(id,'consult');}
 const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
 const PAY_LINKS = {
   'consult':        { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
-  'coaching-x10':   { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/28EaEX9k64KKgHe5GD4ZG04', paystack: null },
-  'coaching-x20':   { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/bJe8wP7bY3GG0Igd954ZG05', paystack: null },
+  'coaching-x10':   { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/00weVd9k65OO1Mked94ZG0g', paystack: null },
+  'coaching-x20':   { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/7sY9AT0NA6SS8aI0mj4ZG0h', paystack: null },
   'ebook-muscle':   { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01', paystack: null },
   'ebook-strength': { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02', paystack: null },
   'ebook-general':  { ngn: 20000,  usd: 14,  stripe: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03', paystack: null },
@@ -1161,46 +1161,47 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <div class="pricing-tier featured">
       <span class="pricing-tier-badge">Most Popular</span>
       <span class="pricing-tier-name">Recomposition</span>
-      <span class="pricing-tier-desc">8 weeks &middot; lose fat and build muscle at once</span>
+      <span class="pricing-tier-desc">8 weeks &middot; lose fat while building lean muscle</span>
       <div class="pricing-tier-price">
         <span class="price-amount" data-price="program-recomp">&#8358;75,000</span>
         <span class="pricing-tier-period">/ 8 weeks</span>
       </div>
       <ul class="pricing-tier-points">
-        <li>4 training days a week, with progression built into every block</li>
-        <li>Calorie &amp; macro targets that shift as your body changes</li>
-        <li>Weekly check-in point with Ayo on WhatsApp</li>
-        <li>Gym-based, with a full home-equipment alternative included</li>
+        <li>4 training days a week, with structured progression</li>
+        <li>Calorie &amp; macro targets that adapt as your body changes</li>
+        <li>Weekly WhatsApp check-ins with Ayo to keep you accountable</li>
+        <li>Gym and home training options &mdash; both included</li>
       </ul>
       <button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-name">Bodybuilding</span>
-      <span class="pricing-tier-desc">12 weeks &middot; physique and hypertrophy focus</span>
+      <span class="pricing-tier-desc">12 weeks &middot; intermediate &middot; full gym access</span>
       <div class="pricing-tier-price">
         <span class="price-amount" data-price="program-building">&#8358;95,000</span>
         <span class="pricing-tier-period">/ 12 weeks</span>
       </div>
       <ul class="pricing-tier-points">
-        <li>5 training days a week &mdash; push, pull, legs, plus weak-point work</li>
-        <li>Volume and intensity progressed across three training blocks</li>
-        <li>Bulking nutrition framework with an adjustment protocol</li>
-        <li>Built for intermediate lifters with full gym access</li>
+        <li>5 training days a week &mdash; a structured push, pull and legs split</li>
+        <li>Targeted work on the weak point you choose, for all 12 weeks</li>
+        <li>Volume and intensity progressed across three focused blocks</li>
+        <li>Practical bulking nutrition with clear adjustment guidelines</li>
       </ul>
       <button class="ebook-buy pricing-tier-buy" data-pay="program-building" onclick="pay('program-building')">Start Bodybuilding &rarr;</button>
     </div>
     <div class="pricing-tier">
       <span class="pricing-tier-badge">Ageless &mdash; 40+</span>
       <span class="pricing-tier-name">Ageless Strength</span>
-      <span class="pricing-tier-desc">8 weeks &middot; strength and muscle after 40</span>
+      <span class="pricing-tier-desc">8 weeks &middot; strength and muscle at 40 and beyond</span>
       <div class="pricing-tier-price">
         <span class="price-amount" data-price="program-ageless">&#8358;85,000</span>
         <span class="pricing-tier-period">/ 8 weeks</span>
       </div>
       <ul class="pricing-tier-points">
-        <li>3 training days a week &mdash; joint-safe loading, no ego lifts</li>
-        <li>Programmed around recovery: what your body needs at 40+, not at 20</li>
-        <li>Protein-forward nutrition to protect muscle and bone</li>
+        <li>3 training days a week &mdash; joint-friendly, progressive loading</li>
+        <li>Build strength, maintain muscle, and improve stability</li>
+        <li>Supports everyday movement, with recovery built in</li>
+        <li>Protein-focused nutrition for muscle retention and bone health</li>
         <li>Pairs with Ageless Mobility for the complete 40+ system</li>
       </ul>
       <button class="ebook-buy pricing-tier-buy" data-pay="program-ageless" onclick="pay('program-ageless')">Start Ageless Strength &rarr;</button>

@@ -945,7 +945,7 @@ body::before{
   <div class="faq-list">
     <details class="faq-item">
       <summary>How do I receive my ebook after payment?</summary>
-      <p>Card payments check out through Stripe and your download opens immediately after payment, with a receipt sent to your email. Paying in Naira? You&rsquo;ll be connected with Ayo on WhatsApp and receive your ebook there once payment is confirmed.</p>
+      <p>Your download opens immediately after payment, in either currency &mdash; card payments check out through Stripe, Naira payments through Paystack, and both send a receipt to your email. If a download ever fails to open, message Ayo and he&rsquo;ll send the file straight over.</p>
     </details>
     <details class="faq-item">
       <summary>Where do coaching and consultation sessions happen?</summary>
@@ -1061,8 +1061,8 @@ function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOver
 function chainToConsult(id){chainOverlay(id,'consult');}
 
 /* ── PAYMENTS & CURRENCY ──
-   One entry per product. `paystack` slots are filled as links are created;
-   until then NGN checkout falls back to WhatsApp. */
+   One entry per product. Every product now has both currencies; the WhatsApp
+   fallback in pay() remains only as a safety net if a link is ever pulled. */
 const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
 const PAY_LINKS = {
   'consult':        { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
@@ -1428,7 +1428,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
       </div>
       <button class="ebook-buy pricing-tier-buy" data-pay="coaching-x20" onclick="pay('coaching-x20')">Subscribe &rarr;</button>
     </div>
-    <p class="pricing-note">NGN: message Ayo on WhatsApp to arrange payment. USD: subscribe instantly by card via Stripe.</p>
+    <p class="pricing-note">Subscribe instantly in either currency &mdash; Naira through Paystack, USD by card through Stripe. Billed monthly, cancel any time.</p>
     <div class="overlay-actions">
       <button class="mag-btn primary" onclick="chainToConsult('coaching')"><span>Consult Ayo</span></button>
       <button class="mag-btn ghost" onclick="closeOverlay('coaching')"><span>&larr; Back</span></button>
@@ -1442,7 +1442,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <button class="overlay-close" onclick="closeOverlay('training')">✕</button>
     <p class="overlay-eyebrow">Service 03</p>
     <h3 class="overlay-title">Starter Routines</h3>
-    <p class="overlay-sub">4-week ebooks to get you training properly &mdash; the simplest way in. Instant delivery on card payment. Want training and nutrition together in one system? Those are the full Programs.</p>
+    <p class="overlay-sub">4-week ebooks to get you training properly &mdash; the simplest way in. Instant delivery in Naira or USD. Want training and nutrition together in one system? Those are the full Programs.</p>
     <div class="currency-tabs" id="ebook-currency-tabs">
       <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
       <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
@@ -1492,7 +1492,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
     <button class="overlay-close" onclick="closeOverlay('nutrition')">✕</button>
     <p class="overlay-eyebrow">Service 04</p>
     <h3 class="overlay-title">Nutrition Planning</h3>
-    <p class="overlay-sub">Structured nutrition ebooks built around your goal. Pay by card in USD for instant delivery, or message Ayo on WhatsApp for NGN.</p>
+    <p class="overlay-sub">Structured nutrition ebooks built around your goal. Instant delivery in both currencies &mdash; Naira through Paystack, USD by card through Stripe.</p>
     <div class="currency-tabs" id="nutrition-currency-tabs">
       <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
       <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>

@@ -667,6 +667,26 @@ footer{
 @media(max-width:900px){.ebook-card{flex-direction:column;align-items:flex-start}.ebook-card-right{text-align:left}}
 
 
+/* ── TRANSFORMATION ── */
+.transform{background:var(--deep)}
+.transform-intro{max-width:46rem;margin-bottom:4rem}
+.transform-intro h2{font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(2rem,4.5vw,3.1rem);line-height:1.1;letter-spacing:-.015em;
+  color:var(--white);margin-bottom:1.5rem;text-wrap:balance}
+.transform-intro p{font-size:.92rem;color:rgba(240,237,232,.5);line-height:1.9;max-width:38rem}
+.transform-pair{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;max-width:46rem}
+.transform-shot{position:relative}
+.transform-shot img{width:100%;height:auto;display:block;border:1px solid var(--line)}
+.transform-year{position:absolute;top:0;left:0;background:var(--black);color:var(--cream);
+  font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;padding:.55rem 1rem;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.transform-note{font-size:.72rem;color:rgba(240,237,232,.3);line-height:1.85;
+  max-width:38rem;margin-top:2.25rem;border-left:1px solid var(--line);padding-left:1.1rem}
+@media(max-width:900px){
+  .transform-pair{gap:.75rem}
+  .transform-year{font-size:.5rem;letter-spacing:.22em;padding:.4rem .7rem}
+}
+
 /* ── PROGRAMME PICKER ── */
 .quiz-progress{height:1px;background:rgba(240,237,232,.1);margin:1.5rem 0 2rem;overflow:hidden}
 .quiz-progress i{display:block;height:100%;background:var(--cream);width:0;transition:width .45s cubic-bezier(.22,1,.36,1)}
@@ -896,6 +916,26 @@ body::before{
       </div>
     </div>
   </div>
+</section>
+
+<!-- TRANSFORMATION -->
+<section class="section transform reveal" id="transformation">
+  <p class="section-label">Proof</p>
+  <div class="transform-intro">
+    <h2>Before Ayo coached anyone,<br/>he trained himself.</h2>
+    <p>Seven years between these two photographs &mdash; the same unglamorous work the programmes on this site are built from.</p>
+  </div>
+  <div class="transform-pair">
+    <figure class="transform-shot">
+      <span class="transform-year">2019</span>
+      <img src="/transformation-2019.jpg" alt="Ayo Balogun in 2019, before seven years of training" loading="lazy" width="613" height="1100"/>
+    </figure>
+    <figure class="transform-shot">
+      <span class="transform-year">2026</span>
+      <img src="/transformation-2026.jpg" alt="Ayo Balogun in 2026, after seven years of training" loading="lazy" width="613" height="1100"/>
+    </figure>
+  </div>
+  <p class="transform-note">This is Ayo&rsquo;s own transformation, not a client result. It took seven years of consistent training &mdash; and what it takes for you depends on your genetics, your consistency, your nutrition, your sleep and where you start from.</p>
 </section>
 
 <!-- PROCESS -->

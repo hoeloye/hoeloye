@@ -582,6 +582,7 @@ footer{
 @media(max-width:640px){
   nav{padding:1.2rem 1.25rem}
   .nav-links{gap:1rem;}
+  .nav-link-wide{display:none}
   .nav-link-ul{font-size:.5rem;letter-spacing:.1em;}
   .nav-cta{font-size:.5rem;padding:.45rem .7rem;letter-spacing:.1em;white-space:nowrap;}
 }
@@ -760,6 +761,7 @@ body::before{
   <a href="#" class="nav-logo"><img src="logo.png" alt="" width="520" height="257"><span class="nav-logo-text">Astro Bodyshop</span></a>
   <nav class="nav-links">
     <a href="#services" class="nav-link-ul">Services</a>
+    <a href="/exercises/" class="nav-link-ul nav-link-wide">Library</a>
     <a href="#about" class="nav-link-ul">About</a>
     <button onclick="openConsult()" class="nav-cta"><span>Consult Ayo</span></button>
   </nav>
@@ -1042,7 +1044,7 @@ body::before{
     <a href="https://x.com/astrolengman" target="_blank" rel="noopener" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24" fill="#C9A84C"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/></svg>X</a>
     <a href="https://www.youtube.com/@hoeloye" target="_blank" rel="noopener" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24" fill="#C9A84C"><path d="M23.498 6.186a2.994 2.994 0 0 0-2.107-2.117C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.391.524A2.994 2.994 0 0 0 .502 6.186 31.26 31.26 0 0 0 0 12a31.26 31.26 0 0 0 .502 5.814 2.994 2.994 0 0 0 2.107 2.117c1.886.524 9.391.524 9.391.524s7.505 0 9.391-.524a2.994 2.994 0 0 0 2.107-2.117A31.26 31.26 0 0 0 24 12a31.26 31.26 0 0 0-.502-5.814zM9.75 15.5v-7l6 3.5-6 3.5z"/></svg>YouTube</a>
   </div>
-  <span class="footer-copy">&copy; 2026 &mdash; All rights reserved<span class="footer-legal"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></span></span>
+  <span class="footer-copy">&copy; 2026 &mdash; All rights reserved<span class="footer-legal"><a href="/exercises/">Exercise library</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></span></span>
 </footer>
 
 <!-- WHATSAPP FLOAT -->
@@ -1374,7 +1376,7 @@ document.querySelectorAll('.service-item-btn,.overlay-close').forEach(el=>{
         <li>4 training days a week, with structured progression</li>
         <li>Calorie &amp; macro targets that adapt as your body changes</li>
         <li>Weekly WhatsApp check-ins with Ayo to keep you accountable</li>
-        <li>Gym and home training options &mdash; both included</li>
+        <li>Gym, home and 40+ joint-friendly tracks &mdash; all three in the one book</li><li>Every movement demonstrated in the free <a href="/exercises/">exercise library</a></li>
       </ul>
       <button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
     </div>

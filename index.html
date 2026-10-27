@@ -653,19 +653,11 @@ footer{
 .pricing-tier-points li::before{content:'\2014';color:var(--cream);opacity:.5;font-size:.6rem;flex-shrink:0}
 
 
-/* ── EBOOK CARDS ── */
-.ebook-grid{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem}
-.ebook-card{border:1px solid var(--line);padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;transition:border-color .25s}
-.ebook-card:hover{border-color:rgba(200,184,154,.25)}
-.ebook-card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--white);display:block;margin-bottom:.25rem;line-height:1.2}
-.ebook-card-desc{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);opacity:.6}
-.ebook-card-right{text-align:right;flex-shrink:0}
-.ebook-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--cream);display:block;margin-bottom:.5rem;transition:opacity .2s}
+/* ── BUY BUTTONS ── */
 .ebook-buy{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);background:none;border:1px solid rgba(200,184,154,.3);padding:.4rem .9rem;cursor:pointer;font-family:'Inter',sans-serif;transition:background .25s,color .25s,border-color .25s;white-space:nowrap}
 .ebook-buy:hover{background:var(--cream);color:var(--black);border-color:var(--cream)}
 .pay-manual{white-space:normal;letter-spacing:.13em;color:var(--mist);border-color:rgba(122,158,142,.3)}
 .pay-manual:hover{background:var(--mist);color:var(--black);border-color:var(--mist)}
-@media(max-width:900px){.ebook-card{flex-direction:column;align-items:flex-start}.ebook-card-right{text-align:left}}
 
 
 /* ── TRANSFORMATION ── */
@@ -1008,11 +1000,6 @@ body::before{
       <button class="buy-quiz" onclick="openQuiz()">Not sure it is for you? Two minutes &rarr;</button>
     </aside>
   </div>
-
-  <p class="prog-after reveal">Already past this? <strong>Bodybuilding</strong> is twelve weeks for
-  intermediate lifters with full gym access, training five days a week on a push, pull and legs
-  split. It picks up where eight weeks of recomposition leaves off.
-  <button data-pay="program-building" onclick="pay('program-building')">See it for <span data-price="program-building">&#8358;95,000</span></button>.</p>
 </section>
 
 <!-- FREE -->
@@ -1125,7 +1112,7 @@ body::before{
 
     <div class="offer reveal" id="mobility">
       <p class="offer-k">Option two</p>
-      <h3>Mobility Work</h3>
+      <h3>Stretching &amp; Mobility</h3>
       <p>Live 1-on-1 video sessions. Real-time assessment, corrections, and written notes after
       every call. Reserved at least 48 hours ahead.</p>
       <ul class="pricing-tier-points">
@@ -1306,24 +1293,20 @@ function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOver
 function chainToConsult(id){chainOverlay(id,'consult');}
 
 /* ── PAYMENTS & CURRENCY ──
-   One entry per product. Every product now has both currencies; the WhatsApp
+   Three products and the consult. Every one has both currencies; the WhatsApp
    fallback in pay() remains only as a safety net if a link is ever pulled. */
 const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
 const PAY_LINKS = {
-  'consult':        { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
-  'coaching-x10':   { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/00weVd9k65OO1Mked94ZG0g', paystack: 'https://paystack.shop/pay/d99y9pggsp' },
-  'coaching-x20':   { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/7sY9AT0NA6SS8aI0mj4ZG0h', paystack: 'https://paystack.shop/pay/w63c9jycgp' },
-  'ebook-muscle':   { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/fZufZh0NA4KKfDad954ZG01', paystack: 'https://paystack.shop/pay/zpi54g06vr' },
-  'ebook-strength': { ngn: 30000,  usd: 22,  stripe: 'https://buy.stripe.com/00w14neEqgtsgHed954ZG02', paystack: 'https://paystack.shop/pay/i-l8h2p760' },
-  'ebook-general':  { ngn: 20000,  usd: 14,  stripe: 'https://buy.stripe.com/eVq8wPbsedhgcqY6KH4ZG03', paystack: 'https://paystack.shop/pay/cec3cm7w8p' },
-  'nutrition-bulk': { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/28E3cvfIu0uu1Mk0mj4ZG06', paystack: 'https://paystack.shop/pay/fqh-j3bp4x' },
-  'nutrition-cut':  { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/aFa4gzbsedhgdv2fhd4ZG07', paystack: 'https://paystack.shop/pay/penu98hx0f' },
-  'mobility':         { ngn: 25000,  usd: 18, stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: 'https://paystack.shop/pay/dtbe7h14c8' },
-  'mobility-monthly': { ngn: 80000,  usd: 59, stripe: 'https://buy.stripe.com/9B6aEX1REelk76E5GD4ZG0b', paystack: 'https://paystack.shop/pay/n-4gxj3803' },
-  'mobility-ageless': { ngn: 110000, usd: 79, stripe: 'https://buy.stripe.com/6oU8wPeEqgtsaiQ0mj4ZG0c', paystack: 'https://paystack.shop/pay/2y7ropolgm' },
-  'program-recomp':   { ngn: 50000,  usd: 36, stripe: 'https://buy.stripe.com/6oU3cvcwi0uu9eM2ur4ZG0i', paystack: 'https://paystack.shop/pay/dqhrc-4nct' },
-  'program-building': { ngn: 95000,  usd: 69, stripe: 'https://buy.stripe.com/9B6fZh1RE910fDafhd4ZG0e', paystack: 'https://paystack.shop/pay/hps7z61muv' },
-  'program-ageless':  { ngn: 85000,  usd: 62, stripe: 'https://buy.stripe.com/eVq9AT67U3GGbmU5GD4ZG0f', paystack: 'https://paystack.shop/pay/ktsgzcijlh' },
+  /* Recomposition */
+  'program-recomp':   { ngn: 50000,  usd: 36,  stripe: 'https://buy.stripe.com/6oU3cvcwi0uu9eM2ur4ZG0i', paystack: 'https://paystack.shop/pay/dqhrc-4nct' },
+  /* Stretching & Mobility */
+  'mobility':         { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: 'https://paystack.shop/pay/dtbe7h14c8' },
+  'mobility-monthly': { ngn: 80000,  usd: 59,  stripe: 'https://buy.stripe.com/9B6aEX1REelk76E5GD4ZG0b', paystack: 'https://paystack.shop/pay/n-4gxj3803' },
+  /* 1-on-1 Virtual Coaching */
+  'coaching-x10':     { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/00weVd9k65OO1Mked94ZG0g', paystack: 'https://paystack.shop/pay/d99y9pggsp' },
+  'coaching-x20':     { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/7sY9AT0NA6SS8aI0mj4ZG0h', paystack: 'https://paystack.shop/pay/w63c9jycgp' },
+  /* not one of the three. The way in for anyone the page does not convince. */
+  'consult':          { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
 };
 
 /* saved choice wins; otherwise Nigeria defaults to NGN, everyone else USD */
@@ -1380,10 +1363,10 @@ function pay(key){
 }
 
 /* ── TRACK PICKER ──
-   There is one programme now, so this no longer chooses between products. Its
-   job is to answer "will this work for me?" and hand back the track to run.
-   Bodybuilding is the single honest exception: it states intermediate, five
-   days and a full gym, so it only wins when all of those are actually true. */
+   There is one programme, so this does not choose between products. Its job is
+   to answer "will this work for me?" and hand back the version to run, with the
+   reasons behind it. The five-day caveat is deliberate: anyone who cannot train
+   five days finds that out here, before they pay, not on page six. */
 const QUIZ = [
   { q: 'How do your joints handle heavy loading?',
     a: [
@@ -1446,61 +1429,41 @@ function renderQuiz(){
   const [joints, gear, goal, days, exp] = _quiz.picks;
   const sore  = joints === 1;
   const track = sore ? 'joint' : (gear === 2 ? 'home' : 'gym');
-  /* Bodybuilding states intermediate, five days and a full gym. It only wins
-     when every one of those is true and nothing needs working around. */
-  const building = !sore && goal === 1 && days === 2 && gear === 0 && exp === 2;
-  const key  = building ? 'program-building' : 'program-recomp';
-  const name = building ? 'Bodybuilding' : 'Recomposition';
-  const sublabel = building ? '12 weeks &middot; five days a week &middot; full gym'
-                            : '8 weeks &middot; five days a week &middot; ' + TRACKS[track].label;
+  const sublabel = '8 weeks &middot; five days a week &middot; ' + TRACKS[track].label;
 
-  const why = [];
-  if(building){
-    why.push('Five days a week on a push, pull and legs split');
-    why.push('Written for people who already have a few years of lifting behind them');
-    why.push('Twelve weeks of building volume on a proper surplus');
-  }else{
-    why.push(TRACKS[track].line);
-    if(goal === 0) why.push('A small, measured shortfall in your food, run alongside training hard enough to keep the muscle you have');
-    if(goal === 1) why.push('Real size wants a surplus and years behind you. Eight weeks of this first gives that something to build on');
-    if(goal === 2) why.push('Core work in every session, and stretching built into the programme rather than sold next to it');
-    if(exp === 0)  why.push('Every exercise filmed in all three versions in the free library, so you are never guessing');
-  }
+  const why = [TRACKS[track].line];
+  if(goal === 0) why.push('A small, measured shortfall in your food, run alongside training hard enough to keep the muscle you have');
+  if(goal === 1) why.push('Real size wants a surplus and years behind you. Eight weeks of this first gives that something to build on');
+  if(goal === 2) why.push('Core work in every session, and stretching built into the programme rather than sold next to it');
+  if(exp === 0)  why.push('Every exercise filmed in all three versions in the free library, so you are never guessing');
 
   step.textContent = 'Your result';
   sub.style.display = 'none';
   bar.style.width = '100%';
 
   let h = '<div class="pricing-tier featured" style="margin-top:0">';
-  h += '<span class="quiz-result-badge">' + (building ? 'Your match' : 'Run the ' + TRACKS[track].label.toLowerCase() + ' column') + '</span>';
-  h += '<span class="pricing-tier-name">' + name + '</span>';
+  h += '<span class="quiz-result-badge">Run the ' + TRACKS[track].label.toLowerCase() + ' column</span>';
+  h += '<span class="pricing-tier-name">Recomposition</span>';
   h += '<span class="pricing-tier-desc">' + sublabel + '</span>';
-  h += '<div class="pricing-tier-price"><span class="price-amount" data-price="' + key + '">&#8358;</span></div>';
+  h += '<div class="pricing-tier-price"><span class="price-amount" data-price="program-recomp">&#8358;</span></div>';
   h += '<ul class="quiz-why">' + why.slice(0,4).map(x => '<li>' + x + '</li>').join('') + '</ul>';
-  h += '<button class="ebook-buy pricing-tier-buy" data-pay="' + key +
-       '" onclick="pay(\'' + key + '\')">Start ' + name + ' &rarr;</button>';
+  h += '<button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" ' +
+       'onclick="pay(\'program-recomp\')">Start Recomposition &rarr;</button>';
   h += '</div>';
 
   /* the programme asks for five sessions. Say so now, not after they pay. */
-  if(!building && days < 2){
+  if(days < 2){
     const weeks = days === 0 ? 'about thirteen' : 'about ten';
     h += '<p class="quiz-alt">One thing to know first. This is written as five sessions a week. ' +
          'On ' + (days === 0 ? 'three' : 'four') + ' you still run every session in order, it just ' +
          'stretches the eight weeks out to ' + weeks + '. That works fine. Skipping sessions to ' +
          'stay on schedule does not.</p>';
   }
-  if(!building){
-    h += '<p class="quiz-alt">Have a look at the ' + TRACKS[track].label.toLowerCase() +
-         ' version of every movement before you decide. ' +
-         '<a href="/exercises/?track=' + TRACKS[track].q + '">Open the library</a>, ' +
-         'or <a onclick="chainOverlay(\'quiz\',\'consult\')">talk it through with Ayo</a> for ' +
-         '<span data-price="consult">&#8358;10,000</span>.</p>';
-  }else{
-    h += '<p class="quiz-alt">If you would rather drop some fat before you chase size, ' +
-         '<a href="#programs" onclick="closeOverlay(\'quiz\')">Recomposition</a> is the eight ' +
-         'weeks to do it in. Or <a onclick="chainOverlay(\'quiz\',\'consult\')">talk it ' +
-         'through with Ayo</a>.</p>';
-  }
+  h += '<p class="quiz-alt">Have a look at the ' + TRACKS[track].label.toLowerCase() +
+       ' version of every movement before you decide. ' +
+       '<a href="/exercises/?track=' + TRACKS[track].q + '">Open the library</a>, ' +
+       'or <a onclick="chainOverlay(\'quiz\',\'consult\')">talk it through with Ayo</a> for ' +
+       '<span data-price="consult">&#8358;10,000</span>.</p>';
   h += '<p class="quiz-alt">Answered one of those wrong? ' +
        '<button class="quiz-restart" onclick="quizRestart()">Start over</button></p>';
   body.innerHTML = h;

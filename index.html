@@ -473,7 +473,8 @@ nav{transition:background .4s,border-color .4s}
 .newsletter{background:var(--black);text-align:center;padding:7rem 5rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .newsletter-inner{max-width:640px;margin:0 auto}
 .newsletter-eyebrow{font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;color:var(--mist);opacity:.65;margin-bottom:1.25rem}
-.newsletter-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.3;letter-spacing:-.01em;margin-bottom:2.5rem}
+.newsletter-heading{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.3;letter-spacing:-.01em;margin-bottom:1.5rem}
+.newsletter-body{font-size:.82rem;line-height:1.95;color:rgba(240,237,232,.42);max-width:52ch;margin:0 auto 2.5rem}
 .newsletter-heading em{font-style:italic;color:var(--cream)}
 .newsletter-form{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
 .newsletter-input{flex:1;min-width:240px;max-width:340px;background:var(--mid);border:1px solid var(--line);padding:.9rem 1.2rem;color:var(--white);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:300;outline:none;transition:border-color .25s}
@@ -483,7 +484,9 @@ nav{transition:background .4s,border-color .4s}
 .newsletter-submit:hover{background:#d8c8aa}
 .newsletter-submit:disabled{opacity:.5;cursor:not-allowed}
 .newsletter-note{margin-top:1.25rem;font-size:.58rem;letter-spacing:.1em;color:rgba(240,237,232,.25)}
-.newsletter-success{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--cream)}
+.newsletter-success{display:none}
+.newsletter-success p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--cream);margin-bottom:1.5rem}
+a.newsletter-submit{display:inline-block;text-decoration:none}
 @media(max-width:640px){
   .newsletter-form{flex-direction:column;align-items:stretch}
   .newsletter-input{max-width:none}
@@ -1188,15 +1191,22 @@ body::before{
 <!-- NEWSLETTER -->
 <section class="newsletter reveal">
   <div class="newsletter-inner">
-    <p class="newsletter-eyebrow">Stay in the loop</p>
-    <h2 class="newsletter-heading">Training tips, new programmes,<br>and offers, <em>straight to your inbox.</em></h2>
+    <p class="newsletter-eyebrow">Free</p>
+    <h2 class="newsletter-heading">Your first session,<br><em>on the house.</em></h2>
+    <p class="newsletter-body">The warm-up, the whole of Day 1 written three ways with the cues
+    that decide each rep, the ten minutes of stretching after it, and how to work out what you
+    should be eating. Sixteen pages, lifted straight out of the programme rather than written
+    around it.</p>
     <form id="newsletter-form" class="newsletter-form" onsubmit="submitNewsletter(event)" novalidate>
       <input type="email" id="nl-email" name="email" class="newsletter-input" placeholder="you@example.com" required>
-      <input type="hidden" name="form_type" value="Newsletter signup">
-      <button type="submit" class="newsletter-submit" id="newsletter-submit-btn">Join the list</button>
+      <input type="hidden" name="form_type" value="Start Here download">
+      <button type="submit" class="newsletter-submit" id="newsletter-submit-btn">Send it to me</button>
     </form>
-    <p class="newsletter-success" id="newsletter-success">You&rsquo;re on the list. Talk soon.</p>
-    <p class="newsletter-note" id="newsletter-note">No spam. Unsubscribe anytime.</p>
+    <div class="newsletter-success" id="newsletter-success">
+      <p>Here it is. Save it to your phone before you leave this page.</p>
+      <a class="newsletter-submit" href="/start-here.pdf" download>Download Start Here &darr;</a>
+    </div>
+    <p class="newsletter-note" id="newsletter-note">One email to get it. No spam, unsubscribe any time.</p>
   </div>
 </section>
 
@@ -1493,15 +1503,16 @@ async function submitNewsletter(e){
   e.preventDefault();
   const form=document.getElementById('newsletter-form');
   const btn=document.getElementById('newsletter-submit-btn');
-  btn.disabled=true;btn.textContent='Joining...';
+  btn.disabled=true;btn.textContent='Sending...';
   try{
     const res=await fetch('https://formspree.io/f/mrewgepb',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
     if(res.ok){
       form.style.display='none';
       document.getElementById('newsletter-note').style.display='none';
       document.getElementById('newsletter-success').style.display='block';
-    }else{btn.disabled=false;btn.textContent='Join the list';alert('Something went wrong. Please try again.');}
-  }catch{btn.disabled=false;btn.textContent='Join the list';alert('Could not send. Check your connection and try again.');}
+      document.getElementById('newsletter-success').scrollIntoView({block:'center'});
+    }else{btn.disabled=false;btn.textContent='Send it to me';alert('Something went wrong. Please try again.');}
+  }catch{btn.disabled=false;btn.textContent='Send it to me';alert('Could not send. Check your connection and try again.');}
 }
 
 /* Update cursor for new interactive elements */

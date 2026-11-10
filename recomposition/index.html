@@ -941,6 +941,7 @@ html{cursor:auto} body{cursor:auto} #cursor{display:none}
         <li>A check-in with Ayo every Sunday</li>
         <li>Secure checkout with Stripe and Paystack</li>
       </ul>
+      <button class="buy-quiz" onclick="openQuiz()">Not sure it is for you? Two minutes &rarr;</button>
     </aside>
   </div>
 </section>
@@ -996,8 +997,173 @@ html{cursor:auto} body{cursor:auto} #cursor{display:none}
 
 <a href="https://wa.me/message/BFJYP7KFU3A4O1" target="_blank" rel="noopener" class="wa-float" aria-label="Chat with Ayo on WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C9A84C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
+<div class="overlay-backdrop" id="overlay-quiz" role="dialog" aria-modal="true">
+  <div class="overlay-panel">
+    <button class="overlay-close" onclick="closeOverlay('quiz')">&#10005;</button>
+    <p class="overlay-eyebrow" id="quiz-step">Question 1 of 5</p>
+    <h3 class="overlay-title">Is it for you?</h3>
+    <p class="overlay-sub" id="quiz-sub">Five questions, about a minute. You get the version to run and the reasons behind it. No email required.</p>
+    <div class="quiz-progress"><i id="quiz-bar"></i></div>
+    <div id="quiz-body"></div>
+    <div class="overlay-actions">
+      <button class="mag-btn ghost" onclick="quizBack()"><span>&larr; Back</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-backdrop" id="overlay-consult" role="dialog" aria-modal="true">
+  <div class="overlay-panel">
+    <button class="overlay-close" onclick="closeOverlay('consult')">✕</button>
+    <p class="overlay-eyebrow">The Clarity Call</p>
+    <h3 class="overlay-title">Consult Ayo</h3>
+    <p class="overlay-sub">A focused 20-minute virtual consultation. We cover where you are, where you want to be, and map out the right plan to get there.</p>
+    <p class="overlay-includes">What happens on the call</p>
+    <ul class="overlay-list">
+      <li>20-minute 1-on-1 video call with Ayo</li>
+      <li>Goals &amp; current lifestyle assessment</li>
+      <li>A clear, personalised next-step plan</li>
+      <li>An honest answer on whether the programme is your next move</li>
+    </ul>
+    <div class="currency-tabs" id="consult-currency-tabs">
+      <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
+      <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
+    </div>
+    <div class="overlay-price-box">
+      <div class="overlay-price-label">Consultation fee</div>
+      <div class="overlay-price-value">
+        <span id="consult-price" data-price="consult">&#8358;10,000</span>
+      </div>
+    </div>
+    <div class="overlay-actions">
+      <button class="mag-btn primary" data-pay="consult" onclick="pay('consult')"><span>Consult</span></button>
+      <button class="mag-btn ghost" onclick="closeOverlay('consult')"><span>&larr; Back</span></button>
+    </div>
+    <p class="pay-secure"><svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="#C9A84C" stroke-width="1.2"><rect x="1" y="5.5" width="9" height="6.5" rx="1"/><path d="M3 5.5V4a2.5 2.5 0 015 0v1.5"/></svg>Secure checkout with Stripe and Paystack</p>
+  </div>
+</div>
+
 <script src="/pay.js"></script>
 <script>
+function openOverlay(id){if(id==='quiz'&&!document.getElementById('quiz-body').innerHTML)renderQuiz();document.getElementById('overlay-'+id).classList.add('is-open');document.body.style.overflow='hidden';}
+function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';}
+function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOverlay(to);},220);}
+function openConsult(){openOverlay('consult');}
+/* ── TRACK PICKER ──
+   There is one programme, so this does not choose between products. Its job is
+   to answer "will this work for me?" and hand back the version to run, with the
+   reasons behind it. The five-day caveat is deliberate: anyone who cannot train
+   five days finds that out here, before they pay, not on page six. */
+const QUIZ = [
+  { q: 'How do your joints handle heavy loading?',
+    a: [
+      { t: 'Fine', d: 'Nothing complains' },
+      { t: 'There is one I work around', d: 'A knee, shoulder, hip or back with history' },
+    ] },
+  { q: 'Where will you actually train?',
+    a: [
+      { t: 'A full gym', d: 'Barbells, machines, cables' },
+      { t: 'A basic gym', d: 'Dumbbells and a rack' },
+      { t: 'At home', d: 'A loaded backpack and some bands' },
+    ] },
+  { q: 'What are you training for?',
+    a: [
+      { t: 'Lose fat and build muscle at once', d: 'Look different, not just lighter' },
+      { t: 'Maximum size', d: 'A fuller, more developed physique' },
+      { t: 'Strength that holds up', d: 'Joints, stability, everyday capability' },
+    ] },
+  { q: 'How many days a week can you realistically train?',
+    a: [ { t: 'Three' }, { t: 'Four' }, { t: 'Five' } ] },
+  { q: 'How long have you been training consistently?',
+    a: [
+      { t: 'Under a year, or starting again' },
+      { t: 'One to three years' },
+      { t: 'Three years or more' },
+    ] },
+];
+const TRACKS = {
+  gym:   { label: 'Gym',            q: 'gym',   line: 'Barbells, machines and cables. The main column of every session is written for you.' },
+  home:  { label: 'At home',        q: 'home',  line: 'A loaded backpack and a set of bands run the same eight weeks, with the same sets, reps and progress.' },
+  joint: { label: 'Joint-friendly', q: 'joint', line: 'Kinder versions of the same movements, and you work one step further from your limit on every set.' },
+};
+let _quiz = { i: 0, picks: [] };
+
+function openQuiz(){ _quiz = { i: 0, picks: [] }; renderQuiz(); openOverlay('quiz'); }
+function quizPick(n){ _quiz.picks[_quiz.i] = n; _quiz.i++; renderQuiz(); }
+function quizBack(){
+  if(_quiz.i === 0){ closeOverlay('quiz'); return; }
+  _quiz.i--; renderQuiz();
+}
+function quizRestart(){ _quiz = { i: 0, picks: [] }; renderQuiz(); }
+
+function renderQuiz(){
+  const body = document.getElementById('quiz-body');
+  const step = document.getElementById('quiz-step');
+  const sub  = document.getElementById('quiz-sub');
+  const bar  = document.getElementById('quiz-bar');
+
+  if(_quiz.i < QUIZ.length){
+    const q = QUIZ[_quiz.i];
+    step.textContent = 'Question ' + (_quiz.i + 1) + ' of ' + QUIZ.length;
+    sub.style.display = _quiz.i === 0 ? '' : 'none';
+    bar.style.width = (_quiz.i / QUIZ.length * 100) + '%';
+    body.innerHTML = '<p class="quiz-q">' + q.q + '</p><div class="quiz-opts">' +
+      q.a.map((o, n) => '<button class="quiz-opt" onclick="quizPick(' + n + ')">' +
+        (o.d ? '<b>' + o.t + '</b>' + o.d : o.t) + '</button>').join('') + '</div>';
+    return;
+  }
+
+  const [joints, gear, goal, days, exp] = _quiz.picks;
+  const sore  = joints === 1;
+  const track = sore ? 'joint' : (gear === 2 ? 'home' : 'gym');
+  const sublabel = '8 weeks &middot; five days a week &middot; ' + TRACKS[track].label;
+
+  const why = [TRACKS[track].line];
+  if(goal === 0) why.push('A small, measured shortfall in your food, run alongside training hard enough to keep the muscle you have');
+  if(goal === 1) why.push('Real size wants a surplus and years behind you. Eight weeks of this first gives that something to build on');
+  if(goal === 2) why.push('Core work in every session, and stretching built into the programme rather than sold next to it');
+  if(exp === 0)  why.push('Every exercise explained in all three versions in the free library, so you are never guessing');
+
+  step.textContent = 'Your result';
+  sub.style.display = 'none';
+  bar.style.width = '100%';
+
+  let h = '<div class="pricing-tier featured" style="margin-top:0">';
+  h += '<span class="quiz-result-badge">Run the ' + TRACKS[track].label.toLowerCase() + ' column</span>';
+  h += '<span class="pricing-tier-name">Recomposition</span>';
+  h += '<span class="pricing-tier-desc">' + sublabel + '</span>';
+  h += '<div class="pricing-tier-price"><span class="price-amount" data-price="program-recomp">&#8358;</span></div>';
+  h += '<ul class="quiz-why">' + why.slice(0,4).map(x => '<li>' + x + '</li>').join('') + '</ul>';
+  h += '<button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" ' +
+       'onclick="pay(\'program-recomp\')">Start Recomposition &rarr;</button>';
+  h += '</div>';
+
+  /* the programme asks for five sessions. Say so now, not after they pay. */
+  if(days < 2){
+    const weeks = days === 0 ? 'about thirteen' : 'about ten';
+    h += '<p class="quiz-alt">One thing to know first. This is written as five sessions a week. ' +
+         'On ' + (days === 0 ? 'three' : 'four') + ' you still run every session in order, it just ' +
+         'stretches the eight weeks out to ' + weeks + '. That works fine. Skipping sessions to ' +
+         'stay on schedule does not.</p>';
+  }
+  h += '<p class="quiz-alt">Have a look at the ' + TRACKS[track].label.toLowerCase() +
+       ' version of every movement before you decide. ' +
+       '<a href="/exercises/?track=' + TRACKS[track].q + '">Open the library</a>, ' +
+       'or <a onclick="chainOverlay(\'quiz\',\'consult\')">talk it through with Ayo</a> for ' +
+       '<span data-price="consult">&#8358;10,000</span>.</p>';
+  h += '<p class="quiz-alt">Answered one of those wrong? ' +
+       '<button class="quiz-restart" onclick="quizRestart()">Start over</button></p>';
+  body.innerHTML = h;
+  renderPrices();
+}
+
+document.querySelectorAll('.overlay-backdrop').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)closeOverlay(el.id.replace('overlay-',''));});
+});
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  document.querySelectorAll('.overlay-backdrop.is-open').forEach(el=>el.classList.remove('is-open'));
+  document.body.style.overflow='';
+});
 document.addEventListener('DOMContentLoaded', renderPrices);
 </script>
 </body>

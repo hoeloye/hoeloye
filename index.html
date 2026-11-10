@@ -845,6 +845,29 @@ body::before{
   .buy-panel{padding:1.75rem 1.4rem}
   .prog-list li{grid-template-columns:1fr;gap:.3rem}
 }
+
+/* ── THREE PRODUCTS ── */
+.products{background:var(--deep)}
+.prod-head{max-width:54rem;margin-bottom:4rem}
+.prod-head .prog-title{margin-bottom:1.75rem}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;align-items:stretch}
+.prod{border:1px solid var(--line);background:rgba(6,15,10,.4);padding:2.25rem 2rem;
+  display:flex;flex-direction:column;transition:border-color .3s,transform .4s cubic-bezier(.22,1,.36,1)}
+.prod:hover{border-color:rgba(200,184,154,.3);transform:translateY(-4px)}
+.prod-k{font-size:.54rem;letter-spacing:.38em;text-transform:uppercase;color:var(--mist);
+  opacity:.65;margin-bottom:1.1rem}
+.prod h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.05rem;
+  letter-spacing:-.015em;line-height:1.05;margin-bottom:.6rem}
+.prod-sub{font-size:.8rem;line-height:1.8;color:rgba(240,237,232,.45);margin-bottom:1.6rem}
+.prod .pricing-tier-points{margin-bottom:2rem}
+.prod-foot{margin-top:auto}
+.prod-foot .offer-price{margin-bottom:1.3rem}
+.prod-foot .ebook-buy{display:block;text-align:center;padding:.85rem;text-decoration:none;
+  font-size:.58rem;letter-spacing:.22em}
+.prod-after{margin-top:3rem;font-size:.8rem;color:rgba(240,237,232,.35);text-align:center}
+.prod-after button{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;
+  font-size:inherit;color:var(--cream);border-bottom:1px solid rgba(200,184,154,.3)}
+@media(max-width:1100px){.prod-grid{grid-template-columns:1fr;gap:1rem}}
 </style>
 </head>
 <body>
@@ -855,7 +878,7 @@ body::before{
 <nav id="nav">
   <a href="#" class="nav-logo"><img src="logo.png" alt="" width="520" height="257"><span class="nav-logo-text">Astro Bodyshop</span></a>
   <nav class="nav-links">
-    <a href="#programs" class="nav-link-ul">Programme</a>
+    <a href="#products" class="nav-link-ul">What we do</a>
     <a href="/exercises/" class="nav-link-ul nav-link-wide">Library</a>
     <a href="#about" class="nav-link-ul nav-link-wide">About</a>
     <button onclick="openConsult()" class="nav-cta"><span>Consult Ayo</span></button>
@@ -886,10 +909,10 @@ body::before{
       <span class="word"><span style="animation-delay:.7s">is&nbsp;</span></span><span class="word"><span style="animation-delay:.82s">your&nbsp;</span></span><span class="word"><span style="animation-delay:.94s"><em>first</em></span></span><br>
       <span class="word"><span style="animation-delay:1.06s">asset.</span></span>
     </h1>
-    <p class="hero-descriptor">One eight-week programme, written three ways. Run it in a gym, run it at home with a backpack and a doorway, or run it around a joint that needs looking after. Built in Lagos, used worldwide.</p>
+    <p class="hero-descriptor">A programme you run yourself, hands-on mobility work, and coaching built around you. Written and run by Ayo Balogun in Lagos, used worldwide.</p>
     <div class="hero-btns">
-      <a href="#programs" class="mag-btn primary" data-mag><span>The programme &middot; <span data-price="program-recomp">&#8358;50,000</span></span></a>
-      <a href="#" onclick="openQuiz();return false;" class="mag-btn ghost" data-mag><span>Is it for me?</span></a>
+      <a href="#products" class="mag-btn primary" data-mag><span>What we do</span></a>
+      <a href="#" onclick="openConsult();return false;" class="mag-btn ghost" data-mag><span>Consult Ayo &middot; <span data-price="consult">&#8358;10,000</span></span></a>
     </div>
   </div>
   <div class="hero-image-panel">
@@ -917,92 +940,76 @@ body::before{
   </div>
 </div>
 
-<!-- THE PROGRAMME -->
-<section class="section prog" id="programs">
-  <div class="prog-head reveal">
-    <p class="section-label">The programme</p>
-    <h2 class="prog-title">One programme.<br>Three ways to <em>run it.</em></h2>
-    <p class="prog-lede">Most people do not fail because they chose the wrong programme. They fail
-    because they chose six, ran none of them, and lost the year. So there is one here. Eight
-    weeks of training and measured eating that holds up whether you have a squat rack, a loaded
-    backpack, or a pair of knees with history.</p>
+<!-- WHAT WE DO -->
+<section class="section products" id="products">
+  <div class="prod-head reveal">
+    <p class="section-label">What we do</p>
+    <h2 class="prog-title">Three ways to<br>work with <em>Ayo.</em></h2>
+    <p class="prog-lede">One programme you run yourself, hands-on sessions for the parts of you
+    that have stopped moving properly, and coaching where he builds the whole thing around you.</p>
   </div>
 
-  <div class="prog-layout">
-    <div>
-      <div class="prog-block reveal">
-        <p class="prog-sub">Three tracks, one book</p>
-        <div class="tracks">
-          <div class="track">
-            <h4>Gym</h4>
-            <p>Barbells, machines and cables. The main column is written for you.</p>
-          </div>
-          <div class="track">
-            <h4>Home</h4>
-            <p>A loaded backpack and a set of bands. Same sets, same reps, same progression.</p>
-          </div>
-          <div class="track">
-            <h4>Joint-friendly</h4>
-            <p>Kinder versions of the same movements, and you work one step further from your limit.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="prog-block reveal">
-        <p class="prog-sub">What eight weeks looks like</p>
-        <ul class="prog-list">
-          <li><i>01</i><span><b>Weeks 1 to 3</b>Five sessions a week. Legs, push, pull, legs
-            again, then everything the first three days left behind. Learn the movements and put a
-            little more weight on the bar each week.</span></li>
-          <li><i>02</i><span><b>Week 4</b>Easy week. Drop one set from everything and keep the
-            weights where they were. This is what lets the next three weeks be heavier.</span></li>
-          <li><i>03</i><span><b>Weeks 5 to 7</b>Add a set to the first two exercises of each day
-            and work at the bottom of each rep range with more weight on the bar.</span></li>
-          <li><i>04</i><span><b>Week 8</b>Same again, but on the last set of your first exercise
-            each day you push one step harder and find out what the eight weeks bought you.</span></li>
-        </ul>
-      </div>
-
-      <div class="prog-block reveal">
-        <p class="prog-sub">What you get</p>
-        <ul class="prog-list">
-          <li><i>01</i><span><b>The book</b>The full eight weeks, the warm-up, the stretching
-            routines, how to work out what to eat, and a logbook to fill in.</span></li>
-          <li><i>02</i><span><b>Numbers worked out from your body</b>Calorie and protein targets you
-            set yourself in ten minutes, and exactly what to change when the scale stops
-            moving.</span></li>
-          <li><i>03</i><span><b>Stretching</b>Ten minutes after every session and a longer one on
-            your days off. It came with the programme.</span></li>
-          <li><i>04</i><span><b>Every movement explained</b>Each exercise in the free
-            <a href="/exercises/">library</a>, in all three versions, with the cues that decide the
-            rep.</span></li>
-          <li><i>05</i><span><b>A check-in with Ayo every Sunday</b>On WhatsApp, for the full eight
-            weeks. Any session, any lift, any number in the book.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <aside class="buy-panel reveal">
-      <div class="currency-tabs">
-        <button class="currency-tab active" data-cur="NGN" onclick="setSiteCurrency('NGN')">&#8358; NGN</button>
-        <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
-      </div>
-      <p class="buy-name">Recomposition</p>
-      <p class="buy-meta">8 weeks &middot; 5 days a week</p>
-      <div class="buy-price">
-        <span class="price-amount" data-price="program-recomp">&#8358;50,000</span>
-      </div>
-      <p class="buy-terms">One payment. Yours to keep.</p>
-      <button class="ebook-buy" data-pay="program-recomp" onclick="pay('program-recomp')">Start Recomposition &rarr;</button>
-      <ul class="buy-reassure">
-        <li>Download opens the moment you pay</li>
-        <li>All three versions in the one book</li>
-        <li>A check-in with Ayo every Sunday</li>
-        <li>Secure checkout with Stripe and Paystack</li>
+  <div class="prod-grid">
+    <article class="prod reveal">
+      <p class="prod-k">The programme</p>
+      <h3>Recomposition</h3>
+      <p class="prod-sub">Lose fat and build muscle at the same time</p>
+      <ul class="pricing-tier-points">
+        <li>Eight weeks, five sessions a week</li>
+        <li>Written three ways: gym, home, or around a joint with history</li>
+        <li>Calorie and protein targets worked out from your own body</li>
+        <li>A check-in with Ayo on WhatsApp every Sunday</li>
       </ul>
-      <button class="buy-quiz" onclick="openQuiz()">Not sure it is for you? Two minutes &rarr;</button>
-    </aside>
+      <div class="prod-foot">
+        <div class="offer-price">
+          <span class="price-amount" data-price="program-recomp">&#8358;50,000</span>
+          <span class="pricing-tier-period">once</span>
+        </div>
+        <a class="ebook-buy" href="/recomposition/">See the programme &rarr;</a>
+      </div>
+    </article>
+
+    <article class="prod reveal" id="mobility">
+      <p class="prod-k">Hands on</p>
+      <h3>Stretching &amp; Mobility</h3>
+      <p class="prod-sub">Get your range back and keep it</p>
+      <ul class="pricing-tier-points">
+        <li>Live 1-on-1 video sessions with Ayo</li>
+        <li>Real-time assessment and corrections</li>
+        <li>Written notes after every call</li>
+        <li>Book one when you need it, or hold a weekly slot</li>
+      </ul>
+      <div class="prod-foot">
+        <div class="offer-price">
+          <span class="price-amount" data-price="mobility">&#8358;25,000</span>
+          <span class="pricing-tier-period">a session</span>
+        </div>
+        <a class="ebook-buy" href="/mobility/">See the sessions &rarr;</a>
+      </div>
+    </article>
+
+    <article class="prod reveal" id="coaching">
+      <p class="prod-k">Everything, together</p>
+      <h3>1-on-1 Coaching</h3>
+      <p class="prod-sub">Built around you, and rebuilt as you change</p>
+      <ul class="pricing-tier-points">
+        <li>A weekly 45-minute video call</li>
+        <li>A programme designed for your body and your week</li>
+        <li>Messaging support between calls</li>
+        <li>A small number of clients at any one time</li>
+      </ul>
+      <div class="prod-foot">
+        <div class="offer-price">
+          <span class="price-amount" data-price="coaching-x10">&#8358;130,000</span>
+          <span class="pricing-tier-period">a month</span>
+        </div>
+        <a class="ebook-buy" href="/coaching/">See how it works &rarr;</a>
+      </div>
+    </article>
   </div>
+
+  <p class="prod-after reveal">Not sure which one? <button onclick="openConsult()">Twenty minutes
+  with Ayo</button> for <span data-price="consult">&#8358;10,000</span>, and an honest answer.</p>
 </section>
 
 <!-- FREE -->
@@ -1010,9 +1017,8 @@ body::before{
   <div class="freebar-in">
     <div>
       <h3>See every movement <em>before you pay.</em></h3>
-      <p>All thirty-nine movements in the programme, each one in its gym, at-home and
-      joint-friendly version, with the handful of cues that decide the rep. No login, no email,
-      nothing held back.</p>
+      <p>Thirty-nine movements, each one in its gym, at-home and joint-friendly version, with the
+      handful of cues that decide the rep. How to lift, free to anyone. No login, no email.</p>
     </div>
     <a href="/exercises/" class="mag-btn ghost" data-mag><span>Open the library &rarr;</span></a>
   </div>
@@ -1086,57 +1092,6 @@ body::before{
 </section>
 
 
-<!-- WORK WITH AYO -->
-<section class="section offers" id="coaching">
-  <p class="section-label reveal">Work with Ayo directly</p>
-  <div class="offer-grid">
-    <div class="offer reveal">
-      <p class="offer-k">Option one</p>
-      <h3>1-on-1 Coaching</h3>
-      <p>A small number of clients at any one time, so everybody gets the attention. Your programme
-      is built around you, and rebuilt as you change.</p>
-      <ul class="pricing-tier-points">
-        <li>Weekly 1:1 video call, 45 minutes</li>
-        <li>A programme designed for your body and your week</li>
-        <li>Messaging support between calls</li>
-        <li>Progress tracking and reviews</li>
-      </ul>
-      <div class="offer-foot">
-        <div class="offer-price">
-          <span class="price-amount" data-price="coaching-x10">&#8358;130,000</span>
-          <span class="pricing-tier-period">/ month</span>
-        </div>
-        <button class="ebook-buy" data-pay="coaching-x10" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
-        <p class="offer-alt">Want more contact? Twenty sessions a month is
-        <button data-pay="coaching-x20" onclick="pay('coaching-x20')"><span data-price="coaching-x20">&#8358;250,000</span></button>.
-        Billed monthly, cancel any time.</p>
-      </div>
-    </div>
-
-    <div class="offer reveal" id="mobility">
-      <p class="offer-k">Option two</p>
-      <h3>Stretching &amp; Mobility</h3>
-      <p>Live 1-on-1 video sessions. Real-time assessment, corrections, and written notes after
-      every call. Reserved at least 48 hours ahead.</p>
-      <ul class="pricing-tier-points">
-        <li>Built around your current mobility priorities</li>
-        <li>Session notes sent after every call</li>
-        <li>Book one when you need it, or hold a weekly slot</li>
-        <li>Stretching is already inside the programme. This is the hands-on version</li>
-      </ul>
-      <div class="offer-foot">
-        <div class="offer-price">
-          <span class="price-amount" data-price="mobility">&#8358;25,000</span>
-          <span class="pricing-tier-period">/ session</span>
-        </div>
-        <button class="ebook-buy" data-pay="mobility" onclick="pay('mobility')">Book a session &rarr;</button>
-        <p class="offer-alt">Training weekly? Mobility Monthly is four sessions for
-        <button data-pay="mobility-monthly" onclick="pay('mobility-monthly')"><span data-price="mobility-monthly">&#8358;80,000</span></button>.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA -->
 <section class="cta-section reveal" id="consult">
   <h2 class="cta-heading">Still<br><em>deciding?</em></h2>
@@ -1145,7 +1100,7 @@ body::before{
     Where you are, where you want to be, and an honest answer on whether the programme is your
     right next move, or whether something else is.</p>
     <button onclick="openConsult()" class="mag-btn primary" data-mag><span>Consult Ayo</span></button>
-    <a href="#programs" class="cta-link" data-mag><span>Back to the programme</span> <span class="arr">&rarr;</span></a>
+    <a href="#products" class="cta-link" data-mag><span>Back to what we do</span> <span class="arr">&rarr;</span></a>
   </div>
 </section>
 
@@ -1297,119 +1252,11 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ── OVERLAYS ── */
-function openOverlay(id){if(id==='quiz'&&!document.getElementById('quiz-body').innerHTML)renderQuiz();document.getElementById('overlay-'+id).classList.add('is-open');document.body.style.overflow='hidden';}
+function openOverlay(id){document.getElementById('overlay-'+id).classList.add('is-open');document.body.style.overflow='hidden';}
 function closeOverlay(id){document.getElementById('overlay-'+id).classList.remove('is-open');document.body.style.overflow='';if(location.hash==='#'+id)history.replaceState(null,'',location.pathname+location.search);}
 function openConsult(){openOverlay('consult');}
 function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOverlay(to);},220);}
 function chainToConsult(id){chainOverlay(id,'consult');}
-
-/* ── TRACK PICKER ──
-   There is one programme, so this does not choose between products. Its job is
-   to answer "will this work for me?" and hand back the version to run, with the
-   reasons behind it. The five-day caveat is deliberate: anyone who cannot train
-   five days finds that out here, before they pay, not on page six. */
-const QUIZ = [
-  { q: 'How do your joints handle heavy loading?',
-    a: [
-      { t: 'Fine', d: 'Nothing complains' },
-      { t: 'There is one I work around', d: 'A knee, shoulder, hip or back with history' },
-    ] },
-  { q: 'Where will you actually train?',
-    a: [
-      { t: 'A full gym', d: 'Barbells, machines, cables' },
-      { t: 'A basic gym', d: 'Dumbbells and a rack' },
-      { t: 'At home', d: 'A loaded backpack and some bands' },
-    ] },
-  { q: 'What are you training for?',
-    a: [
-      { t: 'Lose fat and build muscle at once', d: 'Look different, not just lighter' },
-      { t: 'Maximum size', d: 'A fuller, more developed physique' },
-      { t: 'Strength that holds up', d: 'Joints, stability, everyday capability' },
-    ] },
-  { q: 'How many days a week can you realistically train?',
-    a: [ { t: 'Three' }, { t: 'Four' }, { t: 'Five' } ] },
-  { q: 'How long have you been training consistently?',
-    a: [
-      { t: 'Under a year, or starting again' },
-      { t: 'One to three years' },
-      { t: 'Three years or more' },
-    ] },
-];
-const TRACKS = {
-  gym:   { label: 'Gym',            q: 'gym',   line: 'Barbells, machines and cables. The main column of every session is written for you.' },
-  home:  { label: 'At home',        q: 'home',  line: 'A loaded backpack and a set of bands run the same eight weeks, with the same sets, reps and progress.' },
-  joint: { label: 'Joint-friendly', q: 'joint', line: 'Kinder versions of the same movements, and you work one step further from your limit on every set.' },
-};
-let _quiz = { i: 0, picks: [] };
-
-function openQuiz(){ _quiz = { i: 0, picks: [] }; renderQuiz(); openOverlay('quiz'); }
-function quizPick(n){ _quiz.picks[_quiz.i] = n; _quiz.i++; renderQuiz(); }
-function quizBack(){
-  if(_quiz.i === 0){ closeOverlay('quiz'); return; }
-  _quiz.i--; renderQuiz();
-}
-function quizRestart(){ _quiz = { i: 0, picks: [] }; renderQuiz(); }
-
-function renderQuiz(){
-  const body = document.getElementById('quiz-body');
-  const step = document.getElementById('quiz-step');
-  const sub  = document.getElementById('quiz-sub');
-  const bar  = document.getElementById('quiz-bar');
-
-  if(_quiz.i < QUIZ.length){
-    const q = QUIZ[_quiz.i];
-    step.textContent = 'Question ' + (_quiz.i + 1) + ' of ' + QUIZ.length;
-    sub.style.display = _quiz.i === 0 ? '' : 'none';
-    bar.style.width = (_quiz.i / QUIZ.length * 100) + '%';
-    body.innerHTML = '<p class="quiz-q">' + q.q + '</p><div class="quiz-opts">' +
-      q.a.map((o, n) => '<button class="quiz-opt" onclick="quizPick(' + n + ')">' +
-        (o.d ? '<b>' + o.t + '</b>' + o.d : o.t) + '</button>').join('') + '</div>';
-    return;
-  }
-
-  const [joints, gear, goal, days, exp] = _quiz.picks;
-  const sore  = joints === 1;
-  const track = sore ? 'joint' : (gear === 2 ? 'home' : 'gym');
-  const sublabel = '8 weeks &middot; five days a week &middot; ' + TRACKS[track].label;
-
-  const why = [TRACKS[track].line];
-  if(goal === 0) why.push('A small, measured shortfall in your food, run alongside training hard enough to keep the muscle you have');
-  if(goal === 1) why.push('Real size wants a surplus and years behind you. Eight weeks of this first gives that something to build on');
-  if(goal === 2) why.push('Core work in every session, and stretching built into the programme rather than sold next to it');
-  if(exp === 0)  why.push('Every exercise explained in all three versions in the free library, so you are never guessing');
-
-  step.textContent = 'Your result';
-  sub.style.display = 'none';
-  bar.style.width = '100%';
-
-  let h = '<div class="pricing-tier featured" style="margin-top:0">';
-  h += '<span class="quiz-result-badge">Run the ' + TRACKS[track].label.toLowerCase() + ' column</span>';
-  h += '<span class="pricing-tier-name">Recomposition</span>';
-  h += '<span class="pricing-tier-desc">' + sublabel + '</span>';
-  h += '<div class="pricing-tier-price"><span class="price-amount" data-price="program-recomp">&#8358;</span></div>';
-  h += '<ul class="quiz-why">' + why.slice(0,4).map(x => '<li>' + x + '</li>').join('') + '</ul>';
-  h += '<button class="ebook-buy pricing-tier-buy" data-pay="program-recomp" ' +
-       'onclick="pay(\'program-recomp\')">Start Recomposition &rarr;</button>';
-  h += '</div>';
-
-  /* the programme asks for five sessions. Say so now, not after they pay. */
-  if(days < 2){
-    const weeks = days === 0 ? 'about thirteen' : 'about ten';
-    h += '<p class="quiz-alt">One thing to know first. This is written as five sessions a week. ' +
-         'On ' + (days === 0 ? 'three' : 'four') + ' you still run every session in order, it just ' +
-         'stretches the eight weeks out to ' + weeks + '. That works fine. Skipping sessions to ' +
-         'stay on schedule does not.</p>';
-  }
-  h += '<p class="quiz-alt">Have a look at the ' + TRACKS[track].label.toLowerCase() +
-       ' version of every movement before you decide. ' +
-       '<a href="/exercises/?track=' + TRACKS[track].q + '">Open the library</a>, ' +
-       'or <a onclick="chainOverlay(\'quiz\',\'consult\')">talk it through with Ayo</a> for ' +
-       '<span data-price="consult">&#8358;10,000</span>.</p>';
-  h += '<p class="quiz-alt">Answered one of those wrong? ' +
-       '<button class="quiz-restart" onclick="quizRestart()">Start over</button></p>';
-  body.innerHTML = h;
-  renderPrices();
-}
 
 document.querySelectorAll('.overlay-backdrop').forEach(el=>{
   el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('is-open');document.body.style.overflow='';}});
@@ -1421,7 +1268,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ── DEEP LINKS — #coaching #training #nutrition #mobility #consult open their overlay ── */
-const OVERLAY_IDS = ['consult','quiz'];
+const OVERLAY_IDS = ['consult'];
 function openFromHash(){
   const h = location.hash.replace('#','');
   if(OVERLAY_IDS.includes(h)) openOverlay(h);
@@ -1447,27 +1294,13 @@ async function submitNewsletter(e){
 }
 
 /* Update cursor for new interactive elements */
-document.querySelectorAll('.overlay-close,.buy-quiz,.quiz-opt').forEach(el=>{
+document.querySelectorAll('.overlay-close').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('link'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('link'));
 });
 </script>
 
 <!-- OVERLAYS — the two that are not inline on the page -->
-<div class="overlay-backdrop" id="overlay-quiz" role="dialog" aria-modal="true">
-  <div class="overlay-panel">
-    <button class="overlay-close" onclick="closeOverlay('quiz')">&#10005;</button>
-    <p class="overlay-eyebrow" id="quiz-step">Question 1 of 5</p>
-    <h3 class="overlay-title">Is it for you?</h3>
-    <p class="overlay-sub" id="quiz-sub">Five questions, about a minute. You get the version to run and the reasons behind it. No email required.</p>
-    <div class="quiz-progress"><i id="quiz-bar"></i></div>
-    <div id="quiz-body"></div>
-    <div class="overlay-actions">
-      <button class="mag-btn ghost" onclick="quizBack()"><span>&larr; Back</span></button>
-    </div>
-  </div>
-</div>
-
 <div class="overlay-backdrop" id="overlay-consult" role="dialog" aria-modal="true">
   <div class="overlay-panel">
     <button class="overlay-close" onclick="closeOverlay('consult')">✕</button>

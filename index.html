@@ -1234,6 +1234,7 @@ body::before{
 <!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/message/BFJYP7KFU3A4O1" target="_blank" rel="noopener" class="wa-float" aria-label="Chat with Ayo on WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C9A84C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
+<script src="/pay.js"></script>
 <script>
 /* ── CURSOR ── */
 const cur = document.getElementById('cursor');
@@ -1301,76 +1302,6 @@ function closeOverlay(id){document.getElementById('overlay-'+id).classList.remov
 function openConsult(){openOverlay('consult');}
 function chainOverlay(from,to){closeOverlay(from);setTimeout(function(){openOverlay(to);},220);}
 function chainToConsult(id){chainOverlay(id,'consult');}
-
-/* ── PAYMENTS & CURRENCY ──
-   Three products and the consult. Every one has both currencies; the WhatsApp
-   fallback in pay() remains only as a safety net if a link is ever pulled. */
-const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
-const PAY_LINKS = {
-  /* Recomposition */
-  'program-recomp':   { ngn: 50000,  usd: 36,  stripe: 'https://buy.stripe.com/6oU3cvcwi0uu9eM2ur4ZG0i', paystack: 'https://paystack.shop/pay/dqhrc-4nct' },
-  /* Stretching & Mobility */
-  'mobility':         { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: 'https://paystack.shop/pay/dtbe7h14c8' },
-  'mobility-monthly': { ngn: 80000,  usd: 59,  stripe: 'https://buy.stripe.com/9B6aEX1REelk76E5GD4ZG0b', paystack: 'https://paystack.shop/pay/n-4gxj3803' },
-  /* 1-on-1 Virtual Coaching */
-  'coaching-x10':     { ngn: 130000, usd: 94,  stripe: 'https://buy.stripe.com/00weVd9k65OO1Mked94ZG0g', paystack: 'https://paystack.shop/pay/d99y9pggsp' },
-  'coaching-x20':     { ngn: 250000, usd: 181, stripe: 'https://buy.stripe.com/7sY9AT0NA6SS8aI0mj4ZG0h', paystack: 'https://paystack.shop/pay/w63c9jycgp' },
-  /* not one of the three. The way in for anyone the page does not convince. */
-  'consult':          { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
-};
-
-/* saved choice wins; otherwise Nigeria defaults to NGN, everyone else USD */
-let _currency = (function(){
-  try{ const s = localStorage.getItem('abs-currency'); if(s === 'NGN' || s === 'USD') return s; }catch(e){}
-  try{
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    if(tz === 'Africa/Lagos' || /-NG\b/i.test(navigator.language || '')) return 'NGN';
-  }catch(e){}
-  return 'USD';
-})();
-
-function renderPrices(){
-  /* buttons first: updatePayButtons restores a cached label, and some labels
-     contain a [data-price] span — so prices have to be written after it, not
-     before, or the restored HTML puts the old currency back. */
-  updatePayButtons();
-  document.querySelectorAll('[data-price]').forEach(el => {
-    const p = PAY_LINKS[el.dataset.price];
-    if(p) el.textContent = _currency === 'NGN' ? '₦' + p.ngn.toLocaleString() : '$' + p.usd.toLocaleString();
-  });
-  document.querySelectorAll('.currency-tab').forEach(t => t.classList.toggle('active', t.dataset.cur === _currency));
-}
-/* a product with no checkout in the active currency falls back to WhatsApp —
-   say so on the button so the click matches what actually happens */
-function updatePayButtons(){
-  document.querySelectorAll('[data-pay]').forEach(el => {
-    const p = PAY_LINKS[el.dataset.pay];
-    const only = el.children.length === 1 && el.firstElementChild.tagName === 'SPAN';
-    const label = only ? el.firstElementChild : el;
-    if(el.dataset.payLabel === undefined) el.dataset.payLabel = label.innerHTML;
-    if(p && (_currency === 'USD' ? p.stripe : p.paystack)){
-      label.innerHTML = el.dataset.payLabel;
-      el.classList.remove('pay-manual');
-      el.removeAttribute('aria-label');
-    }else{
-      const sym = _currency === 'NGN' ? '₦' : '$';
-      label.innerHTML = 'Pay in ' + sym + ' via WhatsApp &rarr;';
-      el.classList.add('pay-manual');
-      el.setAttribute('aria-label', 'Message Ayo on WhatsApp to pay in ' + (_currency === 'NGN' ? 'Naira' : 'US Dollars'));
-    }
-  });
-}
-function setSiteCurrency(code){
-  _currency = code;
-  try{ localStorage.setItem('abs-currency', code); }catch(e){}
-  renderPrices();
-}
-function pay(key){
-  const p = PAY_LINKS[key];
-  if(_currency === 'USD' && p && p.stripe){ window.location.href = p.stripe; }
-  else if(_currency === 'NGN' && p && p.paystack){ window.location.href = p.paystack; }
-  else{ window.open(WHATSAPP, '_blank'); }
-}
 
 /* ── TRACK PICKER ──
    There is one programme, so this does not choose between products. Its job is

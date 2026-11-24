@@ -2,9 +2,9 @@
    One copy, loaded by the landing page and the Recomposition page, so a
    price can never be right in one place and stale in the other. */
 /* ── PAYMENTS & CURRENCY ──
-   Three products and the consult. Coaching has no checkout link while its new
-   price is being set up, so for that one the WhatsApp fallback in pay() is
-   load-bearing rather than a safety net. See the note beside it. */
+   Three products and the consult. Coaching has no Paystack link yet, so for
+   that one in Naira the WhatsApp fallback in pay() is load-bearing rather
+   than a safety net. See the note beside it. */
 const WHATSAPP = 'https://wa.me/message/BFJYP7KFU3A4O1';
 const PAY_LINKS = {
   /* Recomposition */
@@ -13,13 +13,13 @@ const PAY_LINKS = {
   'mobility':         { ngn: 25000,  usd: 18,  stripe: 'https://buy.stripe.com/9B6bJ10NAa54aiQ0mj4ZG08', paystack: 'https://paystack.shop/pay/dtbe7h14c8' },
   'mobility-monthly': { ngn: 80000,  usd: 59,  stripe: 'https://buy.stripe.com/9B6aEX1REelk76E5GD4ZG0b', paystack: 'https://paystack.shop/pay/n-4gxj3803' },
   /* 1-on-1 Virtual Coaching */
-  /* One tier now, from 150 dollars a month. The old links are deliberately
-     not reused: they charge 94 and 181 dollars, and a Stripe price cannot be
-     repointed at a new amount, so both rails need a link made from scratch.
-     Until those exist the checkout stays null on purpose. That makes the
-     button read "Pay via WhatsApp" and sends the click there, which is far
-     better than quoting 150 and taking 94. */
-  'coaching':         { ngn: 210000, usd: 150, stripe: null, paystack: null },
+  /* One tier now, from 150 dollars a month. Stripe has a new price and a new
+     link; the old 94 and 181 dollar links are deactivated, since a Stripe
+     price cannot be repointed at a new amount. Paystack is still null until
+     its plan is made, so a Naira visitor gets the WhatsApp fallback and a
+     dollar visitor gets checkout. That is per currency, which is what the
+     button labelling in updatePayButtons already handles. */
+  'coaching':         { ngn: 210000, usd: 150, stripe: 'https://buy.stripe.com/7sY00jgMyelk76Eglh4ZG0j', paystack: null },
   /* not one of the three. The way in for anyone the page does not convince. */
   'consult':          { ngn: 10000,  usd: 8,   stripe: 'https://buy.stripe.com/8x200jgMygtsez69WT4ZG00', paystack: 'https://paystack.shop/pay/elk4hl42w8' },
 };

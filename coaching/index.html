@@ -797,6 +797,8 @@ body::before{
 .prog-after button{background:none;border:0;padding:0;cursor:pointer;
   font-family:inherit;font-size:inherit;color:var(--cream);
   border-bottom:1px solid rgba(200,184,154,.3)}
+.prog-after a{color:var(--cream);text-decoration:none;
+  border-bottom:1px solid rgba(200,184,154,.3)}
 
 /* ── FREE STRIP ── */
 .freebar{background:var(--black);padding:5rem;border-top:1px solid var(--line);
@@ -931,24 +933,14 @@ html{cursor:auto} body{cursor:auto} #cursor{display:none}
         <button class="currency-tab" data-cur="USD" onclick="setSiteCurrency('USD')">$ USD</button>
       </div>
       <div class="pricing-tier">
-      <span class="pricing-tier-name">Ten sessions</span>
-      <span class="pricing-tier-desc">Ten a month</span>
+      <span class="pricing-tier-name">Monthly coaching</span>
       <div class="pricing-tier-price">
-        <span class="price-amount" data-price="coaching-x10">&#8358;</span>
+        <span class="pricing-tier-period">From</span>
+        <span class="price-amount" data-price="coaching">&#8358;</span>
         <span class="pricing-tier-period">a month</span>
       </div>
       <ul class="pricing-tier-points"><li>A weekly 45-minute video call</li><li>A programme designed for you</li><li>Messaging support between calls</li><li>Progress tracking and reviews</li></ul>
-      <button class="ebook-buy pricing-tier-buy" data-pay="coaching-x10" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
-    </div>
-      <div class="pricing-tier">
-      <span class="pricing-tier-name">Twenty sessions</span>
-      <span class="pricing-tier-desc">Twenty a month</span>
-      <div class="pricing-tier-price">
-        <span class="price-amount" data-price="coaching-x20">&#8358;</span>
-        <span class="pricing-tier-period">a month</span>
-      </div>
-      <ul class="pricing-tier-points"><li>Everything above, at twice the contact</li><li>For anyone who wants him in the room more often</li></ul>
-      <button class="ebook-buy pricing-tier-buy" data-pay="coaching-x20" onclick="pay('coaching-x20')">Subscribe &rarr;</button>
+      <button class="ebook-buy pricing-tier-buy" data-pay="coaching" onclick="pay('coaching')">Subscribe &rarr;</button>
     </div>
       <p class="pricing-note">Billed monthly, cancel any time. Naira through Paystack or by card
       through Stripe.</p>
@@ -960,7 +952,7 @@ html{cursor:auto} body{cursor:auto} #cursor{display:none}
   <h2>He takes a few people <em>at a time.</em></h2>
   <p>If the slots are full he will tell you straight away rather than take the money and stretch
   himself thin.</p>
-  <button class="ebook-buy" data-pay="coaching-x10" onclick="pay('coaching-x10')">Subscribe &rarr;</button>
+  <button class="ebook-buy" data-pay="coaching" onclick="pay('coaching')">Subscribe &rarr;</button>
   <p class="pp-links">Rather talk it through first?
     <button onclick="openConsult()">Twenty minutes with Ayo</button>.</p>
 </div>
